@@ -1,0 +1,15 @@
+package brew
+package colored-man-pages
+package fish_logo
+package fonts
+package foreign-env
+package git-flow
+package mvn
+package neovim
+package nvm
+package osx
+package python
+package rustup
+theme default
+theme fishface
+theme tomita
