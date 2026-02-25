@@ -56,9 +56,5 @@ return {
       'zig'
     },
   },
-  config = function (_, opts)
-    local configs = require("nvim-treesitter.configs")
-    configs.setup(opts)
-  end
 }
 
