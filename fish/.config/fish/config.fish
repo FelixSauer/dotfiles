@@ -5,7 +5,6 @@ end
 # Auto-start tmux
 if status is-interactive
 and not set -q TMUX
-and not set -q VSCODE_INJECTION
     # Attach to existing session or create new one
     if tmux has-session 2>/dev/null
         exec tmux attach
