@@ -38,6 +38,8 @@ dotfiles/
 │   └── .config/nvim/
 │       ├── init.lua
 │       └── lua/
+│           ├── core/
+│           └── plugins/
 │
 ├── omf/
 │   └── .config/omf/
@@ -48,7 +50,8 @@ dotfiles/
 │
 └── tmux/
     └── .config/tmux/
-        └── tmux.conf
+        ├── tmux.conf
+        └── plugins/
 ```
 
 ### How GNU Stow works
@@ -83,6 +86,41 @@ bash setup.sh
 4. Install SDKMAN, TPM (Tmux Plugin Manager), and the `gh copilot` extension
 
 The script is idempotent — safe to run multiple times.
+
+---
+
+## Installation Details
+
+### macOS
+
+All tools are installed via Homebrew:
+
+- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, himalaya
+- **Casks:** font-hack-nerd-font
+
+### Linux
+
+| Tool              | Method                              |
+|-------------------|-------------------------------------|
+| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh | apt |
+| go                | go.dev binary release               |
+| neovim            | GitHub releases binary              |
+| lazygit           | GitHub releases binary              |
+| lazydocker        | GitHub releases binary              |
+| eza               | Official apt repo                   |
+| starship          | Install script (starship.rs)        |
+| font-hack-nerd-font | GitHub release zip (~/.local/share/fonts) |
+| rust              | rustup.rs install script            |
+| mongosh           | MongoDB GitHub releases binary      |
+| tree-sitter-cli   | `cargo install tree-sitter-cli`     |
+| himalaya          | `cargo install himalaya`            |
+
+### Both platforms (post-install)
+
+- **SDKMAN** — curl installer (`https://get.sdkman.io`)
+- **TPM** — git clone
+- **gh copilot** — `gh extension install github/gh-copilot`
+- **claude-code** — npm only, installed manually (see below)
 
 ---
 
@@ -148,33 +186,32 @@ npm install -g @anthropic-ai/claude-code
 
 OS assignments are defined in `packages.config`. `setup.sh` reads this file and skips
 packages that do not apply to the current OS. To add a new package, create its directory
-and add a line to `packages.config`. The file uses Stow's terminology: each top-level
-directory is a package.
+and add a line to `packages.config`.
 
-| Package             | OS    | Description                                                        |
-|---------------------|-------|--------------------------------------------------------------------|
-| bat                 | both  | Cat clone with syntax highlighting                                 |
-| btop                | both  | Resource monitor                                                   |
-| claude-code         | both  | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
-| copilot-cli         | both  | GitHub Copilot CLI (`gh copilot` extension)                        |
-| eza                 | both  | Modern ls replacement                                              |
-| fish                | both  | Fish shell — aliases, functions, tmux auto-start                   |
-| font-hack-nerd-font | both  | Hack Nerd Font (cask on macOS, GitHub release on Linux)            |
-| fzf                 | both  | Fuzzy finder                                                       |
-| go                  | both  | Go toolchain (brew on macOS, go.dev binary on Linux)               |
-| himalaya            | both  | Terminal email client (brew on macOS, `cargo install` on Linux)    |
-| lazydocker          | both  | Terminal UI for Docker                                             |
-| lazygit             | both  | Terminal UI for git                                                |
-| mongosh             | both  | MongoDB Shell (brew on macOS, binary release on Linux)             |
-| neofetch            | both  | System info display                                                |
-| nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                      |
-| omf                 | both  | Oh My Fish framework config                                        |
-| rust                | both  | Rust toolchain (brew on macOS, rustup on Linux)                    |
-| sdkman              | both  | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)  |
-| starship            | both  | Cross-shell prompt                                                 |
-| stow                | both  | Symlink manager used to deploy dotfiles                            |
-| tmux                | both  | Terminal multiplexer — TPM, Atom One Dark theme                    |
-| tree-sitter-cli     | both  | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)          |
+| Package             | OS   | Description                                                         |
+|---------------------|------|---------------------------------------------------------------------|
+| bat                 | both | Cat clone with syntax highlighting                                  |
+| btop                | both | Resource monitor                                                    |
+| claude-code         | both | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
+| copilot-cli         | both | GitHub Copilot CLI (`gh copilot` extension)                         |
+| eza                 | both | Modern ls replacement                                               |
+| fish                | both | Fish shell — aliases, functions, tmux auto-start                    |
+| font-hack-nerd-font | both | Hack Nerd Font (cask on macOS, GitHub release on Linux)             |
+| fzf                 | both | Fuzzy finder                                                        |
+| go                  | both | Go toolchain (brew on macOS, go.dev binary on Linux)                |
+| himalaya            | both | Terminal email client (brew on macOS, `cargo install` on Linux)     |
+| lazydocker          | both | Terminal UI for Docker                                              |
+| lazygit             | both | Terminal UI for git                                                 |
+| mongosh             | both | MongoDB Shell (brew on macOS, binary release on Linux)              |
+| neofetch            | both | System info display                                                 |
+| nvim                | both | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                       |
+| omf                 | both | Oh My Fish framework config                                         |
+| rust                | both | Rust toolchain (brew on macOS, rustup on Linux)                     |
+| sdkman              | both | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
+| starship            | both | Cross-shell prompt                                                  |
+| stow                | both | Symlink manager used to deploy dotfiles                             |
+| tmux                | both | Terminal multiplexer — TPM, Atom One Dark theme                     |
+| tree-sitter-cli     | both | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)           |
 
 ---
 
@@ -200,26 +237,28 @@ nvim --headless "+Lazy! sync" +qa
 
 ### Tmux (prefix: Ctrl+a)
 
-| Binding            | Action                      |
-|--------------------|-----------------------------|
-| `Prefix + +`       | Split pane horizontally     |
-| `Prefix + -`       | Split pane vertically       |
-| `Prefix + h/j/k/l` | Navigate panes (Vim-style)  |
-| `Alt + arrows`     | Navigate panes (no prefix)  |
-| `Prefix + r`       | Reload tmux config          |
-| `Prefix + I`       | Install TPM plugins         |
+| Binding              | Action                     |
+|----------------------|----------------------------|
+| `Prefix + +`         | Split pane horizontally    |
+| `Prefix + -`         | Split pane vertically      |
+| `Prefix + h/j/k/l`   | Navigate panes (Vim-style) |
+| `Alt + arrows`       | Navigate panes (no prefix) |
+| `Prefix + r`         | Reload tmux config         |
+| `Prefix + I`         | Install TPM plugins        |
 
 ### Fish
 
-| Alias    | Expands to                           |
-|----------|--------------------------------------|
-| `c`      | `clear`                              |
-| `l`      | `eza --long --header --all`          |
-| `V`      | `nvim`                               |
-| `G`      | `lazygit`                            |
-| `q`      | `exit`                               |
-| `config` | `cd ~/.config/`                      |
-| `Alt+Cr` | Reload fish + tmux config            |
+| Alias    | Expands to                                          |
+|----------|-----------------------------------------------------|
+| `c`      | `clear`                                             |
+| `l`      | `eza --long --header --all --color=auto`            |
+| `tree`   | `eza --tree --long --header --all --color=auto`     |
+| `v`      | `nvim`                                              |
+| `g`      | `lazygit`                                           |
+| `d`      | `lazydocker`                                        |
+| `k`      | `k9s`                                               |
+| `q`      | `exit`                                              |
+| `Alt+Cr` | Reload fish + tmux config                           |
 
 ---
 
