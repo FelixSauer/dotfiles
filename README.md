@@ -1,172 +1,228 @@
 # dotfiles
 
-Personal configuration files for my development environment.
+Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Supports macOS (Homebrew) and Linux (apt).
 
-## 📦 What's Included
+---
 
-### 🖥️ Terminal & Shell
-- **[Alacritty](alacritty/)** - GPU-accelerated terminal emulator
-  - Catppuccin color scheme
-  - MesloLGS Nerd Font
-  - 95% opacity with custom padding
-  
-- **[Fish Shell](fish/)** - User-friendly shell with smart features
-  - Auto-start tmux in interactive sessions
-  - SSH agent management
-  - Custom aliases and functions
-  - Eza integration for better `ls` output
+## Structure
 
-- **[Tmux](tmux/)** - Terminal multiplexer ([detailed docs](tmux/README.md))
-  - Custom prefix key (`Ctrl+a`)
-  - TPM plugins (resurrect, continuum, sensible)
-  - Vim-style pane navigation
-  - Mouse support enabled
+Each tool has its own top-level directory. Inside, the path mirrors `$HOME` exactly,
+so GNU Stow can create the correct symlinks automatically.
 
-- **[Oh My Fish](omf/)** - Fish shell framework
-  - Plugin and theme management
-
-### ⌨️ Editor
-- **[Neovim](nvim/)** - Hyperextensible Vim-based text editor
-  - Lazy.nvim plugin manager
-  - LSP configuration with auto-completion
-  - Treesitter for advanced syntax highlighting
-  - GitHub Copilot integration
-  - LazyGit integration
-  - Debugging support (DAP)
-  - Testing framework (Neotest)
-  - File explorer (nvim-tree)
-  - Obsidian integration
-  - Kubernetes utilities
-  - Docker integration (lazydocker)
-  - Harpoon for quick file navigation
-  - And many more plugins...
-
-### 🔧 Development Tools
-- **[LazyGit](lazygit/)** - Terminal UI for git commands
-  - Custom configuration and keybindings
-
-## 🚀 Installation
-
-### Prerequisites
-
-Install required dependencies:
-
-```bash
-# On macOS
-brew install fish tmux neovim alacritty lazygit eza
-
-# On Linux (Debian/Ubuntu)
-sudo apt install fish tmux neovim alacritty
+```
+dotfiles/
+├── setup.sh              # Bootstrap script (install + stow)
+├── packages.config       # OS-specific package assignments
+├── .gitignore
+│
+├── btop/
+│   └── .config/btop/
+│       └── btop.conf
+│
+├── fish/
+│   └── .config/fish/
+│       ├── config.fish
+│       ├── functions/
+│       └── conf.d/
+│
+├── lazygit/
+│   └── .config/lazygit/
+│       └── config.yml
+│
+├── neofetch/
+│   └── .config/neofetch/
+│       └── config.conf
+│
+├── nvim/
+│   └── .config/nvim/
+│       ├── init.lua
+│       └── lua/
+│
+├── omf/
+│   └── .config/omf/
+│
+├── starship/
+│   └── .config/
+│       └── starship.toml
+│
+└── tmux/
+    └── .config/tmux/
+        └── tmux.conf
 ```
 
-### Quick Setup
+### How GNU Stow works
 
-Clone this repository:
+Stow reads each package directory and creates symlinks in `$HOME` that mirror
+the directory tree.
+
+```
+dotfiles/fish/.config/fish/config.fish
+         ^--- package    ^--- relative to $HOME
+
+result: ~/.config/fish/config.fish -> ~/dotfiles/fish/.config/fish/config.fish
+```
+
+---
+
+## Quick Setup
 
 ```bash
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+# 1. Clone the repository
+git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+
+# 2. Run the setup script
+bash setup.sh
 ```
 
-### Manual Installation
+`setup.sh` will:
+1. Detect the OS
+2. Install all packages via Homebrew (macOS) or apt + install scripts (Linux)
+3. Run `stow --restow` for each package listed in `packages.config`, skipping those not applicable to the current OS
+4. Install SDKMAN, TPM (Tmux Plugin Manager), and the `gh copilot` extension
 
-Create symbolic links for each configuration:
+The script is idempotent — safe to run multiple times.
+
+---
+
+## Manual Stow Usage
 
 ```bash
-# Alacritty
-ln -sf ~/dotfiles/alacritty/.config/alacritty ~/.config/
+# Stow a single package
+stow --dir=~/dotfiles --target="$HOME" fish
 
-# Fish
-ln -sf ~/dotfiles/fish/.config/fish ~/.config/
+# Stow all packages
+bash setup.sh
 
-# Tmux
-ln -sf ~/dotfiles/tmux/.config/tmux ~/.config/
+# Preview what stow would do (dry run)
+stow --dir=~/dotfiles --target="$HOME" --simulate fish
 
-# Neovim
-ln -sf ~/dotfiles/nvim/.config/nvim ~/.config/
+# Restow after adding new files to a package
+stow --dir=~/dotfiles --target="$HOME" --restow fish
 
-# LazyGit
-ln -sf ~/dotfiles/lazygit/.config/lazygit ~/.config/
+# Remove a package
+stow --dir=~/dotfiles --target="$HOME" --delete fish
 ```
 
-### Post-Installation
+---
 
-#### Tmux
-Install TPM (Tmux Plugin Manager):
+## Post-Install
+
+### Fish shell
+
+Set Fish as the default shell:
+
 ```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-Then press `Prefix + I` in tmux to install plugins.
+# Add fish to /etc/shells if not already listed
+echo "$(which fish)" | sudo tee -a /etc/shells
 
-#### Neovim
-Launch Neovim - Lazy.nvim will automatically install plugins on first run:
+# Change default shell
+chsh -s "$(which fish)"
+```
+
+### Tmux plugins
+
+Inside a tmux session, press `Prefix + I` (capital i) to install plugins via TPM.
+
+### Neovim
+
+Start Neovim — Lazy.nvim will install all plugins automatically on first launch:
+
 ```bash
 nvim
 ```
 
-#### Fish
-Set Fish as your default shell:
+### Claude Code
+
+`claude-code` is distributed via npm only and cannot be installed without it.
+Install manually after setup:
+
 ```bash
-chsh -s $(which fish)
+npm install -g @anthropic-ai/claude-code
 ```
 
-Install Oh My Fish:
-```bash
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-```
+---
 
-## 📝 Key Features
+## Packages
 
-### Fish Aliases
-- `c` - Clear terminal
-- `l` - List files with eza (long format, all files)
-- `V` - Launch Neovim
-- `G` - Launch LazyGit
-- `q` - Exit shell
-- `dev` - Navigate to dev directory
-- `config` - Navigate to config directory
+OS assignments are defined in `packages.config`. `setup.sh` reads this file and skips
+packages that do not apply to the current OS. To add a new package, create its directory
+and add a line to `packages.config`. The file uses Stow's terminology: each top-level
+directory is a package.
 
-### Tmux Keybindings
-- `Ctrl+a` - Prefix key
-- `Prefix + +` - Split horizontally
-- `Prefix + -` - Split vertically
-- `Prefix + h/j/k/l` - Navigate panes (Vim-style)
-- `Alt + Arrow keys` - Navigate panes (without prefix)
-- `Prefix + r` - Reload configuration
+| Package             | OS    | Description                                                        |
+|---------------------|-------|--------------------------------------------------------------------|
+| bat                 | both  | Cat clone with syntax highlighting                                 |
+| btop                | both  | Resource monitor                                                   |
+| claude-code         | both  | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
+| copilot-cli         | both  | GitHub Copilot CLI (`gh copilot` extension)                        |
+| eza                 | both  | Modern ls replacement                                              |
+| fish                | both  | Fish shell — aliases, functions, tmux auto-start                   |
+| font-hack-nerd-font | both  | Hack Nerd Font (cask on macOS, GitHub release on Linux)            |
+| fzf                 | both  | Fuzzy finder                                                       |
+| go                  | both  | Go toolchain (brew on macOS, go.dev binary on Linux)               |
+| himalaya            | both  | Terminal email client (brew on macOS, `cargo install` on Linux)    |
+| lazydocker          | both  | Terminal UI for Docker                                             |
+| lazygit             | both  | Terminal UI for git                                                |
+| mongosh             | both  | MongoDB Shell (brew on macOS, binary release on Linux)             |
+| neofetch            | both  | System info display                                                |
+| nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                      |
+| omf                 | both  | Oh My Fish framework config                                        |
+| rust                | both  | Rust toolchain (brew on macOS, rustup on Linux)                    |
+| sdkman              | both  | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)  |
+| starship            | both  | Cross-shell prompt                                                 |
+| stow                | both  | Symlink manager used to deploy dotfiles                            |
+| tmux                | both  | Terminal multiplexer — TPM, Atom One Dark theme                    |
+| tree-sitter-cli     | both  | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)          |
 
-### Neovim
-- Leader key: `Space`
-- See individual plugin configurations in [nvim/lua/plugins/](nvim/.config/nvim/lua/plugins/)
+---
 
-## 🎨 Theme & Appearance
+## Updating
 
-- **Terminal Theme**: Catppuccin (Mocha)
-- **Font**: MesloLGS Nerd Font (size 12)
-- **Terminal**: Alacritty with 95% opacity
-
-## 🔄 Updating
-
-Pull the latest changes:
 ```bash
 cd ~/dotfiles
 git pull
+
+# Re-stow to pick up any new files
+bash setup.sh
+
+# Update Neovim plugins
+nvim --headless "+Lazy! sync" +qa
+
+# Update Tmux plugins
+# Inside tmux: Prefix + U
 ```
 
-Update Neovim plugins:
-```bash
-nvim
-:Lazy sync
-```
+---
 
-Update Tmux plugins:
-```bash
-# In tmux: Prefix + U
-```
+## Key Bindings Reference
 
-## 📄 License
+### Tmux (prefix: Ctrl+a)
 
-Feel free to use these configurations for your own setup!
+| Binding            | Action                      |
+|--------------------|-----------------------------|
+| `Prefix + +`       | Split pane horizontally     |
+| `Prefix + -`       | Split pane vertically       |
+| `Prefix + h/j/k/l` | Navigate panes (Vim-style)  |
+| `Alt + arrows`     | Navigate panes (no prefix)  |
+| `Prefix + r`       | Reload tmux config          |
+| `Prefix + I`       | Install TPM plugins         |
 
-## 🤝 Contributing
+### Fish
 
-Suggestions and improvements are welcome! Feel free to open an issue or pull request.
+| Alias    | Expands to                           |
+|----------|--------------------------------------|
+| `c`      | `clear`                              |
+| `l`      | `eza --long --header --all`          |
+| `V`      | `nvim`                               |
+| `G`      | `lazygit`                            |
+| `q`      | `exit`                               |
+| `config` | `cd ~/.config/`                      |
+| `Alt+Cr` | Reload fish + tmux config            |
+
+---
+
+## License
+
+Use freely for your own setup.

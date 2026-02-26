@@ -1,0 +1,33 @@
+[accounts.gmail]
+default = true
+email = "felixsauer@gmail.com"
+display-name = "Felix Sauer"
+downloads-dir = "/Users/Felix.Sauer/felix-emails"
+
+backend.type = "imap"
+backend.host = "imap.gmail.com"
+backend.port = 993
+backend.login = "felixsauer82@gmail.com"
+backend.auth.type = "oauth2"
+backend.auth.client-id = "*****"
+backend.auth.client-secret.keyring = "gmail-oauth2-client-secret"
+backend.auth.access-token.keyring = "gmail-oauth2-access-token"
+backend.auth.refresh-token.keyring = "gmail-oauth2-refresh-token"
+backend.auth.auth-url = "https://accounts.google.com/o/oauth2/v2/auth"
+backend.auth.token-url = "https://www.googleapis.com/oauth2/v3/token"
+backend.auth.pkce = true
+backend.auth.scope = "https://mail.google.com/"
+
+message.send.backend.type = "smtp"
+message.send.backend.host = "smtp.gmail.com"
+message.send.backend.port = 465
+message.send.backend.login = "felixsauer82@gmail.com"
+message.send.backend.auth.type = "oauth2"
+message.send.backend.auth.client-id = "*****"
+message.send.backend.auth.client-secret.keyring = "gmail-oauth2-client-secret"
+message.send.backend.auth.access-token.keyring = "gmail-oauth2-access-token"
+message.send.backend.auth.refresh-token.keyring = "gmail-oauth2-refresh-token"
+message.send.backend.auth.auth-url = "https://accounts.google.com/o/oauth2/v2/auth"
+message.send.backend.auth.token-url = "https://www.googleapis.com/oauth2/v3/token"
+message.send.backend.auth.pkce = true
+message.send.backend.auth.scope = "https://mail.google.com/"

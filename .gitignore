@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor swap/backup files
+*.swp
+*.swo
+*~
+*.bak
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Fish — machine-specific, not meant for version control
+fish/.config/fish/fish_variables
+
+# Neovim — generated lock file (optional: track if you want reproducible plugins)
+# nvim/.config/nvim/lazy-lock.json
+
+# Tmux plugins — installed at runtime via TPM, not stored in dotfiles
+tmux/.config/tmux/plugins/
+
+# Logs
+*.log
+
+# OS-specific
+Thumbs.db
+
+# Claude AI
+claude/

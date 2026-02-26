@@ -1,0 +1,72 @@
+# Starship prompt configuration
+# Docs: https://starship.rs/config/
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Prompt layout — one line with newline before the character
+format = """
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = true
+
+# ---------------------------------------------------------------------------
+# Directory
+# ---------------------------------------------------------------------------
+
+[directory]
+truncation_length   = 3
+truncate_to_repo    = true
+style               = "bold blue"
+read_only           = " ro"
+
+# ---------------------------------------------------------------------------
+# Git
+# ---------------------------------------------------------------------------
+
+[git_branch]
+symbol    = "git "
+style     = "bold purple"
+format    = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+style     = "bold red"
+ahead     = "^${count}"
+behind    = "v${count}"
+diverged  = "^${ahead_count}v${behind_count}"
+modified  = "!"
+untracked = "?"
+staged    = "+"
+stashed   = "$"
+
+[git_state]
+style  = "bold yellow"
+format = "[$state( $progress_current/$progress_total)]($style) "
+
+# ---------------------------------------------------------------------------
+# Command duration
+# ---------------------------------------------------------------------------
+
+[cmd_duration]
+min_time = 2000
+format   = "[${duration}](bold yellow) "
+
+# ---------------------------------------------------------------------------
+# Prompt character
+# ---------------------------------------------------------------------------
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol   = "[>](bold red)"
+
+# ---------------------------------------------------------------------------
+# Disabled modules (enable as needed)
+# ---------------------------------------------------------------------------
+
+[package]
+disabled = true
