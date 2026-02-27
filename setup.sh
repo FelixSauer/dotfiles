@@ -49,7 +49,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup himalaya)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup himalaya posting zoxide)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -83,7 +83,7 @@ install_linux() {
 
     sudo apt-get update -qq
 
-    local packages=(git tmux curl stow fish gpg wget bat fzf gh)
+    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide)
 
     for pkg in "${packages[@]}"; do
         if dpkg -s "$pkg" &>/dev/null 2>&1; then
@@ -230,6 +230,15 @@ install_linux() {
         log_info "Compiling himalaya..."
         cargo install himalaya
         log_ok "himalaya"
+    fi
+
+    # posting — TUI HTTP client via pipx
+    if command -v posting &>/dev/null; then
+        log_ok "posting already installed"
+    else
+        log_info "Installing posting..."
+        pipx install posting
+        log_ok "posting"
     fi
 
     log_info "Setting fish paths for Linux..."

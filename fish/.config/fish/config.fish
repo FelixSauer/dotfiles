@@ -6,11 +6,11 @@ end
 
 # --- Tmux Auto-start -----------------------------------------
 if status is-interactive && not set -q TMUX
-    if tmux has-session 2>/dev/null
-        exec tmux attach
-    else
-        exec tmux
-    end
+     if tmux has-session 2>/dev/null
+         exec tmux attach
+     else
+         exec tmux
+     end
 end
 
 
@@ -23,7 +23,6 @@ alias tree 'eza --tree --long --header --all --color=auto'
 alias v    nvim
 alias g    lazygit
 alias d    laszydocker
-alias k    k9s
 alias q    exit
 
 
