@@ -129,9 +129,9 @@ install_linux() {
         local lg_version
         lg_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
         curl -sLo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${lg_version}/lazygit_${lg_version}_Linux_x86_64.tar.gz"
-        tar xf lazygit.tar.gz lazygit
+        tar xf lazygit.tar.gz --overwrite lazygit
         sudo install lazygit -D -t /usr/local/bin/
-        rm lazygit lazygit.tar.gz
+        rm -f lazygit lazygit.tar.gz
         log_ok "lazygit"
     fi
 
@@ -143,9 +143,9 @@ install_linux() {
         local ld_version
         ld_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
         curl -sLo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/download/v${ld_version}/lazydocker_${ld_version}_Linux_x86_64.tar.gz"
-        tar xf lazydocker.tar.gz lazydocker
+        tar xf lazydocker.tar.gz --overwrite lazydocker
         sudo install lazydocker -D -t /usr/local/bin/
-        rm lazydocker lazydocker.tar.gz
+        rm -f lazydocker lazydocker.tar.gz
         log_ok "lazydocker"
     fi
 
