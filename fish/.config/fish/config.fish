@@ -19,6 +19,7 @@ set fish_greeting
 
 alias c    clear
 alias l    'eza --long --header --all --color=auto'
+alias ls   'eza --long --header --all --color=auto'
 alias tree 'eza --tree --long --header --all --color=auto'
 alias v    nvim
 alias g    lazygit
@@ -34,3 +35,8 @@ end
 
 # --- Prompt -------------------------------------------------
 starship init fish | source
+
+zoxide init fish | source
+
+# opencode
+fish_add_path /Users/Felix.Sauer/.opencode/bin

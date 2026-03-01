@@ -1,0 +1,25 @@
+name: atom-one-dark
+description: Based on the Atom One Dark color palette.
+
+primary: '#61afef'
+secondary: '#56b6c2'
+accent: '#e5c07b'
+background: '#282c34'
+surface: '#21252b'
+error: '#e06c75'
+success: '#98c379'
+warning: '#e5c07b'
+
+syntax:
+  json_key: '#61afef'
+  json_string: '#98c379'
+  json_number: '#e5c07b'
+  json_boolean: '#56b6c2'
+  json_null: '#e06c75'
+
+method:
+  get: '#98c379'
+  post: '#61afef'
+  put: '#e5c07b'
+  delete: '#e06c75'
+  patch: '#56b6c2'

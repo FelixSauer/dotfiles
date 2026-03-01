@@ -1,5 +1,8 @@
 return {
 	"folke/snacks.nvim",
+	init = function()
+		vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#abb2bf" })
+	end,
 	opts = {
 		dashboard = {
 			preset = {

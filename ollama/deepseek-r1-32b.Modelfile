@@ -1,0 +1,5 @@
+FROM deepseek-r1:32b
+
+PARAMETER num_ctx 32768
+
+SYSTEM "You are a helpful coding assistant. Respond in plain text. Never output JSON tool calls or task management objects."

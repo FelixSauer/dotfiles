@@ -49,7 +49,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup himalaya posting zoxide)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup himalaya posting zoxide glow)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -61,7 +61,26 @@ install_macos() {
         fi
     done
 
-    local casks=(font-hack-nerd-font)
+    # opencode — SST tap
+    if command -v opencode &>/dev/null; then
+        log_ok "opencode already installed"
+    else
+        log_info "Installing opencode..."
+        brew tap sst/tap
+        brew install --quiet opencode
+        log_ok "opencode"
+    fi
+
+    # ollama — local LLM runtime
+    if command -v ollama &>/dev/null; then
+        log_ok "ollama already installed"
+    else
+        log_info "Installing ollama..."
+        brew install --quiet ollama
+        log_ok "ollama"
+    fi
+
+    local casks=(font-hack-nerd-font taproom)
 
     for cask in "${casks[@]}"; do
         if brew list --cask "$cask" &>/dev/null 2>&1; then
@@ -232,6 +251,38 @@ install_linux() {
         log_ok "himalaya"
     fi
 
+    # glow — markdown renderer from GitHub releases
+    if command -v glow &>/dev/null; then
+        log_ok "glow already installed"
+    else
+        log_info "Installing glow..."
+        local glow_version
+        glow_version=$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+        curl -sLo glow.tar.gz "https://github.com/charmbracelet/glow/releases/download/v${glow_version}/glow_${glow_version}_Linux_x86_64.tar.gz"
+        tar xf glow.tar.gz --overwrite glow
+        sudo install glow -D -t /usr/local/bin/
+        rm -f glow glow.tar.gz
+        log_ok "glow"
+    fi
+
+    # opencode — AI coding assistant
+    if command -v opencode &>/dev/null; then
+        log_ok "opencode already installed"
+    else
+        log_info "Installing opencode..."
+        curl -fsSL https://opencode.ai/install | bash
+        log_ok "opencode"
+    fi
+
+    # ollama — local LLM runtime
+    if command -v ollama &>/dev/null; then
+        log_ok "ollama already installed"
+    else
+        log_info "Installing ollama..."
+        curl -fsSL https://ollama.com/install.sh | sh
+        log_ok "ollama"
+    fi
+
     # posting — TUI HTTP client via pipx
     if command -v posting &>/dev/null; then
         log_ok "posting already installed"
@@ -297,6 +348,20 @@ post_install() {
         log_ok "TPM installed — press Prefix+I inside tmux to load plugins"
     else
         log_ok "tpm already installed"
+    fi
+
+    # Ollama — apply custom Modelfiles
+    if command -v ollama &>/dev/null; then
+        log_info "Applying Ollama Modelfiles..."
+        for modelfile in "$DOTFILES_DIR"/ollama/*.Modelfile; do
+            [[ -f "$modelfile" ]] || continue
+            local base model_tag
+            base=$(basename "$modelfile" .Modelfile)
+            model_tag="${base%-*}:${base##*-}"
+            ollama create "$model_tag" -f "$modelfile" &>/dev/null && log_ok "ollama: $model_tag" || log_warn "ollama: $model_tag failed"
+        done
+    else
+        log_warn "ollama not found — skipping Modelfiles"
     fi
 
     # Claude Code — distributed via npm only, no binary or cargo alternative

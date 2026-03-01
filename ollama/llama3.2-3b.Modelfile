@@ -1,0 +1,22 @@
+FROM llama3.2:3b
+
+PARAMETER num_ctx 32768
+PARAMETER stop <|start_header_id|>
+PARAMETER stop <|end_header_id|>
+PARAMETER stop <|eot_id|>
+
+SYSTEM "You are a helpful coding assistant. Respond in plain text. Never output JSON tool calls or task management objects."
+
+TEMPLATE """<|start_header_id|>system<|end_header_id|>
+Cutting Knowledge Date: December 2023
+{{ if .System }}{{ .System }}
+{{- end }}<|eot_id|>
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 }}
+{{- if eq .Role "user" }}<|start_header_id|>user<|end_header_id|>
+{{ .Content }}<|eot_id|>{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
+{{ end }}
+{{- else if eq .Role "assistant" }}<|start_header_id|>assistant<|end_header_id|>
+{{ .Content }}{{ if not $last }}<|eot_id|>{{ end }}
+{{- end }}
+{{- end }}{{ if .Tools }}{{ end }}"""

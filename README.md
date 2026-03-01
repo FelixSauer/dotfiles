@@ -48,6 +48,13 @@ dotfiles/
 │   └── .config/
 │       └── starship.toml
 │
+├── posting/
+│   ├── .config/posting/
+│   │   └── config.yaml
+│   └── .local/share/posting/
+│       └── themes/
+│           └── atom-one-dark.yaml
+│
 └── tmux/
     └── .config/tmux/
         ├── tmux.conf
@@ -95,18 +102,19 @@ The script is idempotent — safe to run multiple times.
 
 All tools are installed via Homebrew:
 
-- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, himalaya
-- **Casks:** font-hack-nerd-font
+- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, himalaya, posting, zoxide, glow
+- **Casks:** font-hack-nerd-font, taproom
 
 ### Linux
 
 | Tool              | Method                              |
 |-------------------|-------------------------------------|
-| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh | apt |
+| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh, pipx, zoxide | apt |
 | go                | go.dev binary release               |
 | neovim            | GitHub releases binary              |
 | lazygit           | GitHub releases binary              |
 | lazydocker        | GitHub releases binary              |
+| glow              | GitHub releases binary              |
 | eza               | Official apt repo                   |
 | starship          | Install script (starship.rs)        |
 | font-hack-nerd-font | GitHub release zip (~/.local/share/fonts) |
@@ -114,6 +122,7 @@ All tools are installed via Homebrew:
 | mongosh           | MongoDB GitHub releases binary      |
 | tree-sitter-cli   | `cargo install tree-sitter-cli`     |
 | himalaya          | `cargo install himalaya`            |
+| posting           | `pipx install posting`              |
 
 ### Both platforms (post-install)
 
@@ -209,9 +218,13 @@ and add a line to `packages.config`.
 | rust                | both | Rust toolchain (brew on macOS, rustup on Linux)                     |
 | sdkman              | both | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
 | starship            | both | Cross-shell prompt                                                  |
+| glow                | both | Terminal markdown renderer (brew on macOS, GitHub release on Linux) |
+| posting             | both | TUI HTTP client — Atom One Dark theme (brew on macOS, pipx on Linux)|
 | stow                | both | Symlink manager used to deploy dotfiles                             |
+| taproom             | macos| Homebrew GUI (cask)                                                 |
 | tmux                | both | Terminal multiplexer — TPM, Atom One Dark theme                     |
 | tree-sitter-cli     | both | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)           |
+| zoxide              | both | Smart directory jumper (brew on macOS, apt on Linux)                |
 
 ---
 
