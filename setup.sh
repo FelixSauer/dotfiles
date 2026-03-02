@@ -111,7 +111,7 @@ install_linux() {
 
     sudo apt-get update -qq
 
-    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide)
+    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide unzip zip build-essential libclang-dev zstd)
 
     for pkg in "${packages[@]}"; do
         if dpkg -s "$pkg" &>/dev/null 2>&1; then
@@ -269,30 +269,12 @@ install_linux() {
         log_info "Installing glow..."
         local glow_version
         glow_version=$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-        curl -sLo glow.tar.gz "https://github.com/charmbracelet/glow/releases/download/v${glow_version}/glow_${glow_version}_Linux_x86_64.tar.gz"
+        curl -sLo glow.tar.gz "https://github.com/charmbracelet/glow/releases/download/v${glow_version}/glow_${glow_version}_linux_x86_64.tar.gz"
         local glow_tmp; glow_tmp=$(mktemp -d)
         tar xf glow.tar.gz -C "$glow_tmp"
-        sudo install "$glow_tmp/glow" -D -t /usr/local/bin/
+        find "$glow_tmp" -name glow -type f -executable -exec sudo install {} -D -t /usr/local/bin/ \;
         rm -rf "$glow_tmp" glow.tar.gz
         log_ok "glow"
-    fi
-
-    # opencode — AI coding assistant
-    if command -v opencode &>/dev/null; then
-        log_ok "opencode already installed"
-    else
-        log_info "Installing opencode..."
-        curl -fsSL https://opencode.ai/install | bash
-        log_ok "opencode"
-    fi
-
-    # ollama — local LLM runtime
-    if command -v ollama &>/dev/null; then
-        log_ok "ollama already installed"
-    else
-        log_info "Installing ollama..."
-        curl -fsSL https://ollama.com/install.sh | sh
-        log_ok "ollama"
     fi
 
     # posting — TUI HTTP client via pipx
@@ -305,7 +287,7 @@ install_linux() {
     fi
 
     log_info "Setting fish paths for Linux..."
-    fish -c "fish_add_path /usr/local/bin /usr/local/go/bin $HOME/.local/bin /opt/nvim-linux-x86_64/bin"
+    fish -c "fish_add_path /usr/local/bin /usr/local/go/bin $HOME/.local/bin /opt/nvim-linux-x86_64/bin $HOME/.cargo/bin"
     log_ok "fish paths set"
 }
 
@@ -387,9 +369,13 @@ post_install() {
     if gh extension list 2>/dev/null | grep -q "gh-copilot"; then
         log_ok "gh copilot already installed"
     else
-        log_info "Installing gh copilot extension..."
-        gh extension install github/gh-copilot
-        log_ok "gh copilot"
+        if gh auth status &>/dev/null; then
+            log_info "Installing gh copilot extension..."
+            gh extension install github/gh-copilot
+            log_ok "gh copilot"
+        else
+            log_warn "gh copilot: run 'gh auth login' first"
+        fi
     fi
 
     if [[ "$(basename "${SHELL:-}")" != "fish" ]]; then
