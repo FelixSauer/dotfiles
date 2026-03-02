@@ -1,6 +1,6 @@
 [accounts.gmail]
 default = true
-email = "felixsauer@gmail.com"
+email = "felixsauer82@gmail.com"
 display-name = "Felix Sauer"
 downloads-dir = "/Users/Felix.Sauer/felix-emails"
 
@@ -9,6 +9,7 @@ backend.host = "imap.gmail.com"
 backend.port = 993
 backend.login = "felixsauer82@gmail.com"
 backend.auth.type = "oauth2"
+backend.auth.method = "xoauth2"
 backend.auth.client-id = "*****"
 backend.auth.client-secret.keyring = "gmail-oauth2-client-secret"
 backend.auth.access-token.keyring = "gmail-oauth2-access-token"
@@ -23,6 +24,7 @@ message.send.backend.host = "smtp.gmail.com"
 message.send.backend.port = 465
 message.send.backend.login = "felixsauer82@gmail.com"
 message.send.backend.auth.type = "oauth2"
+message.send.backend.auth.method = "xoauth2"
 message.send.backend.auth.client-id = "*****"
 message.send.backend.auth.client-secret.keyring = "gmail-oauth2-client-secret"
 message.send.backend.auth.access-token.keyring = "gmail-oauth2-access-token"

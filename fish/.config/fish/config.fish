@@ -40,3 +40,6 @@ zoxide init fish | source
 
 # opencode
 fish_add_path /Users/Felix.Sauer/.opencode/bin
+
+# cargo
+fish_add_path /Users/Felix.Sauer/.cargo/bin

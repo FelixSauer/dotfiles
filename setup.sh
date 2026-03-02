@@ -49,7 +49,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup himalaya posting zoxide glow)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -78,6 +78,15 @@ install_macos() {
         log_info "Installing ollama..."
         brew install --quiet ollama
         log_ok "ollama"
+    fi
+
+    # himalaya — needs oauth2 feature, compile via cargo
+    if command -v himalaya &>/dev/null; then
+        log_ok "himalaya already installed"
+    else
+        log_info "Compiling himalaya..."
+        cargo install himalaya --features oauth2 --locked
+        log_ok "himalaya"
     fi
 
     local casks=(font-hack-nerd-font taproom)
@@ -148,9 +157,10 @@ install_linux() {
         local lg_version
         lg_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
         curl -sLo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${lg_version}/lazygit_${lg_version}_Linux_x86_64.tar.gz"
-        tar xf lazygit.tar.gz --overwrite lazygit
-        sudo install lazygit -D -t /usr/local/bin/
-        rm -f lazygit lazygit.tar.gz
+        local lg_tmp; lg_tmp=$(mktemp -d)
+        tar xf lazygit.tar.gz -C "$lg_tmp"
+        sudo install "$lg_tmp/lazygit" -D -t /usr/local/bin/
+        rm -rf "$lg_tmp" lazygit.tar.gz
         log_ok "lazygit"
     fi
 
@@ -162,9 +172,10 @@ install_linux() {
         local ld_version
         ld_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
         curl -sLo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/download/v${ld_version}/lazydocker_${ld_version}_Linux_x86_64.tar.gz"
-        tar xf lazydocker.tar.gz --overwrite lazydocker
-        sudo install lazydocker -D -t /usr/local/bin/
-        rm -f lazydocker lazydocker.tar.gz
+        local ld_tmp; ld_tmp=$(mktemp -d)
+        tar xf lazydocker.tar.gz -C "$ld_tmp"
+        sudo install "$ld_tmp/lazydocker" -D -t /usr/local/bin/
+        rm -rf "$ld_tmp" lazydocker.tar.gz
         log_ok "lazydocker"
     fi
 
@@ -247,7 +258,7 @@ install_linux() {
         log_ok "himalaya already installed"
     else
         log_info "Compiling himalaya..."
-        cargo install himalaya
+        cargo install himalaya --features oauth2 --locked
         log_ok "himalaya"
     fi
 
@@ -259,9 +270,10 @@ install_linux() {
         local glow_version
         glow_version=$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
         curl -sLo glow.tar.gz "https://github.com/charmbracelet/glow/releases/download/v${glow_version}/glow_${glow_version}_Linux_x86_64.tar.gz"
-        tar xf glow.tar.gz --overwrite glow
-        sudo install glow -D -t /usr/local/bin/
-        rm -f glow glow.tar.gz
+        local glow_tmp; glow_tmp=$(mktemp -d)
+        tar xf glow.tar.gz -C "$glow_tmp"
+        sudo install "$glow_tmp/glow" -D -t /usr/local/bin/
+        rm -rf "$glow_tmp" glow.tar.gz
         log_ok "glow"
     fi
 
