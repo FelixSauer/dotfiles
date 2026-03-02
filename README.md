@@ -13,6 +13,7 @@ so GNU Stow can create the correct symlinks automatically.
 ```
 dotfiles/
 ├── setup.sh              # Bootstrap script (install + stow)
+├── uninstall.sh          # Reverse of setup (unstow + optional uninstall)
 ├── packages.config       # OS-specific package assignments
 ├── .gitignore
 │
@@ -25,6 +26,12 @@ dotfiles/
 │       ├── config.fish
 │       ├── functions/
 │       └── conf.d/
+│
+├── himalaya/
+│   └── .config/himalaya/
+│
+├── kitty/
+│   └── .config/kitty/
 │
 ├── lazygit/
 │   └── .config/lazygit/
@@ -41,12 +48,17 @@ dotfiles/
 │           ├── core/
 │           └── plugins/
 │
+├── ollama/
+│   ├── deepseek-r1-32b.Modelfile
+│   ├── llama3.2-3b.Modelfile
+│   ├── llama3.3-70b.Modelfile
+│   └── qwen2.5-coder-32b.Modelfile
+│
 ├── omf/
 │   └── .config/omf/
 │
-├── starship/
-│   └── .config/
-│       └── starship.toml
+├── opencode/
+│   └── .config/opencode/
 │
 ├── posting/
 │   ├── .config/posting/
@@ -54,6 +66,10 @@ dotfiles/
 │   └── .local/share/posting/
 │       └── themes/
 │           └── atom-one-dark.yaml
+│
+├── starship/
+│   └── .config/
+│       └── starship.toml
 │
 └── tmux/
     └── .config/tmux/
@@ -90,7 +106,8 @@ bash setup.sh
 1. Detect the OS
 2. Install all packages via Homebrew (macOS) or apt + install scripts (Linux)
 3. Run `stow --restow` for each package listed in `packages.config`, skipping those not applicable to the current OS
-4. Install SDKMAN, TPM (Tmux Plugin Manager), and the `gh copilot` extension
+4. Install SDKMAN, TPM (Tmux Plugin Manager), and the `gh copilot` extension (if authenticated)
+5. Apply Ollama Modelfiles (if ollama is installed)
 
 The script is idempotent — safe to run multiple times.
 
@@ -102,14 +119,17 @@ The script is idempotent — safe to run multiple times.
 
 All tools are installed via Homebrew:
 
-- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, himalaya, posting, zoxide, glow
+- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow
 - **Casks:** font-hack-nerd-font, taproom
+- **SST Tap:** opencode
+- **Brew:** ollama
+- **Cargo:** himalaya (`cargo install himalaya --features oauth2`)
 
 ### Linux
 
 | Tool              | Method                              |
 |-------------------|-------------------------------------|
-| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh, pipx, zoxide | apt |
+| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh, pipx, zoxide, unzip, zip, build-essential, libclang-dev, zstd | apt |
 | go                | go.dev binary release               |
 | neovim            | GitHub releases binary              |
 | lazygit           | GitHub releases binary              |
@@ -121,15 +141,16 @@ All tools are installed via Homebrew:
 | rust              | rustup.rs install script            |
 | mongosh           | MongoDB GitHub releases binary      |
 | tree-sitter-cli   | `cargo install tree-sitter-cli`     |
-| himalaya          | `cargo install himalaya`            |
+| himalaya          | `cargo install himalaya --features oauth2` |
 | posting           | `pipx install posting`              |
 
 ### Both platforms (post-install)
 
 - **SDKMAN** — curl installer (`https://get.sdkman.io`)
 - **TPM** — git clone
-- **gh copilot** — `gh extension install github/gh-copilot`
+- **gh copilot** — `gh extension install github/gh-copilot` (requires `gh auth login` first)
 - **claude-code** — npm only, installed manually (see below)
+- **Ollama Modelfiles** — custom Modelfiles from `ollama/` are applied if ollama is available
 
 ---
 
@@ -197,34 +218,36 @@ OS assignments are defined in `packages.config`. `setup.sh` reads this file and 
 packages that do not apply to the current OS. To add a new package, create its directory
 and add a line to `packages.config`.
 
-| Package             | OS   | Description                                                         |
-|---------------------|------|---------------------------------------------------------------------|
-| bat                 | both | Cat clone with syntax highlighting                                  |
-| btop                | both | Resource monitor                                                    |
-| claude-code         | both | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
-| copilot-cli         | both | GitHub Copilot CLI (`gh copilot` extension)                         |
-| eza                 | both | Modern ls replacement                                               |
-| fish                | both | Fish shell — aliases, functions, tmux auto-start                    |
-| font-hack-nerd-font | both | Hack Nerd Font (cask on macOS, GitHub release on Linux)             |
-| fzf                 | both | Fuzzy finder                                                        |
-| go                  | both | Go toolchain (brew on macOS, go.dev binary on Linux)                |
-| himalaya            | both | Terminal email client (brew on macOS, `cargo install` on Linux)     |
-| lazydocker          | both | Terminal UI for Docker                                              |
-| lazygit             | both | Terminal UI for git                                                 |
-| mongosh             | both | MongoDB Shell (brew on macOS, binary release on Linux)              |
-| neofetch            | both | System info display                                                 |
-| nvim                | both | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                       |
-| omf                 | both | Oh My Fish framework config                                         |
-| rust                | both | Rust toolchain (brew on macOS, rustup on Linux)                     |
-| sdkman              | both | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
-| starship            | both | Cross-shell prompt                                                  |
-| glow                | both | Terminal markdown renderer (brew on macOS, GitHub release on Linux) |
-| posting             | both | TUI HTTP client — Atom One Dark theme (brew on macOS, pipx on Linux)|
-| stow                | both | Symlink manager used to deploy dotfiles                             |
-| taproom             | macos| Homebrew GUI (cask)                                                 |
-| tmux                | both | Terminal multiplexer — TPM, Atom One Dark theme                     |
-| tree-sitter-cli     | both | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)           |
-| zoxide              | both | Smart directory jumper (brew on macOS, apt on Linux)                |
+| Package             | OS    | Description                                                         |
+|---------------------|-------|---------------------------------------------------------------------|
+| bat                 | both  | Cat clone with syntax highlighting                                  |
+| btop                | both  | Resource monitor                                                    |
+| claude-code         | both  | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
+| copilot-cli         | both  | GitHub Copilot CLI (`gh copilot` extension)                         |
+| eza                 | both  | Modern ls replacement                                               |
+| fish                | both  | Fish shell — aliases, functions, tmux auto-start                    |
+| font-hack-nerd-font | both  | Hack Nerd Font (cask on macOS, GitHub release on Linux)             |
+| fzf                 | both  | Fuzzy finder                                                        |
+| go                  | both  | Go toolchain (brew on macOS, go.dev binary on Linux)                |
+| glow                | both  | Terminal markdown renderer (brew on macOS, GitHub release on Linux) |
+| himalaya            | macos | Terminal email client (`cargo install` with oauth2 feature)         |
+| lazydocker          | both  | Terminal UI for Docker                                              |
+| lazygit             | both  | Terminal UI for git                                                 |
+| mongosh             | both  | MongoDB Shell (brew on macOS, binary release on Linux)              |
+| neofetch            | both  | System info display                                                 |
+| nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                       |
+| ollama              | macos | Local LLM runtime + custom Modelfiles                               |
+| omf                 | both  | Oh My Fish framework config                                         |
+| opencode            | macos | AI coding assistant (SST tap)                                       |
+| posting             | both  | TUI HTTP client — Atom One Dark theme (brew on macOS, pipx on Linux)|
+| rust                | both  | Rust toolchain (brew on macOS, rustup on Linux)                     |
+| sdkman              | both  | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
+| starship            | both  | Cross-shell prompt                                                  |
+| stow                | both  | Symlink manager used to deploy dotfiles                             |
+| taproom             | macos | Homebrew GUI (cask)                                                 |
+| tmux                | both  | Terminal multiplexer — TPM, Atom One Dark theme                     |
+| tree-sitter-cli     | both  | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)           |
+| zoxide              | both  | Smart directory jumper (brew on macOS, apt on Linux)                |
 
 ---
 
