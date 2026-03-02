@@ -23,7 +23,7 @@ alias ls   'eza --long --header --all --color=auto'
 alias tree 'eza --tree --long --header --all --color=auto'
 alias v    nvim
 alias g    lazygit
-alias d    laszydocker
+alias d    lazydocker
 alias q    exit
 
 # --- Games ---------------------------------------------------
@@ -49,6 +49,8 @@ end
 starship init fish | source
 
 zoxide init fish | source
+
+direnv hook fish | source
 
 # opencode
 fish_add_path /Users/Felix.Sauer/.opencode/bin

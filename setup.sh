@@ -66,7 +66,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow cmake pipx)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow cmake pipx direnv)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -173,7 +173,7 @@ install_linux() {
 
     sudo apt-get update -qq
 
-    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide unzip zip build-essential libclang-dev zstd libasound2-dev cmake perl libssl-dev pkg-config libxml2-dev libsqlite3-dev)
+    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide unzip zip build-essential libclang-dev zstd libasound2-dev cmake perl libssl-dev pkg-config libxml2-dev libsqlite3-dev direnv)
 
     for pkg in "${packages[@]}"; do
         if dpkg -s "$pkg" &>/dev/null 2>&1; then

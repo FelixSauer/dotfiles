@@ -1,4 +1,10 @@
-# dotfiles
+```
+  _|          _|_|                _|    _|_|  _|  _|
+  _|        _|    _|  _|_|_|    _|_|  _|      _|  _|
+  _|        _|    _|    _|        _|  _|_|_|  _|_|_|_|
+  _|        _|    _|    _|        _|  _|      _|  _|
+  _|_|_|_|    _|_|    _|_|_|_|   _|    _|_|  _|  _|
+```
 
 Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
 Supports macOS (Homebrew) and Linux (apt).
@@ -244,11 +250,11 @@ and add a line to `packages.config`.
 | minesweep-rs        | both  | Terminal minesweeper (`cargo install minesweep`, alias: `mines`)    |
 | mongosh             | both  | MongoDB Shell (brew on macOS, binary release on Linux)              |
 | neofetch            | both  | System info display                                                 |
-| nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                       |
+| nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot, onedarkpro theme      |
 | ollama              | macos | Local LLM runtime + custom Modelfiles                               |
 | omf                 | both  | Oh My Fish framework config                                         |
 | opencode            | macos | AI coding assistant (SST tap)                                       |
-| posting             | both  | TUI HTTP client — Atom One Dark theme (brew on macOS, pipx on Linux)|
+| posting             | both  | TUI HTTP client — onedark theme (brew on macOS, pipx on Linux)      |
 | rebels-in-the-sky   | both  | Terminal space game (`cargo install rebels`, alias: `rit`)          |
 | rust                | both  | Rust toolchain (brew on macOS, rustup on Linux)                     |
 | sdkman              | both  | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
@@ -257,7 +263,7 @@ and add a line to `packages.config`.
 | starship            | both  | Cross-shell prompt                                                  |
 | stow                | both  | Symlink manager used to deploy dotfiles                             |
 | taproom             | macos | Homebrew GUI (cask)                                                 |
-| tmux                | both  | Terminal multiplexer — TPM, Atom One Dark theme                     |
+| tmux                | both  | Terminal multiplexer — TPM, onedarkpro color palette                |
 | tree-sitter-cli     | both  | Tree-sitter CLI (brew on macOS, `cargo install` on Linux)           |
 | zoxide              | both  | Smart directory jumper (brew on macOS, apt on Linux)                |
 
@@ -281,9 +287,32 @@ nvim --headless "+Lazy! sync" +qa
 
 ---
 
+## Color Theme
+
+All tools use the [onedarkpro](https://github.com/olimorris/onedarkpro.nvim) `onedark_vivid` palette as the single source of truth:
+
+| Color  | Hex       | Usage                                                      |
+|--------|-----------|------------------------------------------------------------|
+| red    | `#ef596f` | Lualine Replace mode, tmux PREFIX indicator                |
+| yellow | `#e5c07b` | Lualine Command mode, tmux window activity                 |
+| green  | `#89ca78` | Lualine Insert mode, tmux session name                     |
+| cyan   | `#2bbac5` | Lualine z-section, tmux clock + copy-mode selection        |
+| blue   | `#61afef` | Lualine Normal mode, tmux active window tab                |
+| purple | `#d55fde` | Lualine Visual mode, tmux active pane border               |
+
+### Neovim
+
+Syntax highlighting uses `olimorris/onedarkpro.nvim` with the `onedark_vivid` variant. Lualine pulls colors at runtime via `require("onedarkpro.helpers").get_colors()` — no hardcoded hex values. The statusline indicator changes color per Vim mode.
+
+### Tmux
+
+Status bar: session name (green) on the left, clock + optional PREFIX indicator (red) on the right. Active pane border is purple, copy-mode selection is cyan.
+
+---
+
 ## Key Bindings Reference
 
-### Tmux (prefix: Ctrl+a)
+### Tmux (prefix: Ctrl+s)
 
 | Binding              | Action                     |
 |----------------------|----------------------------|
