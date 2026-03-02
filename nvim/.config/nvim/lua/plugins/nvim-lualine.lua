@@ -10,8 +10,34 @@ return {
 	},
 	opts = {
 		options = {
-			-- For more themes, see https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
-			theme = "onedark", -- "auto, tokyonight, catppuccin, codedark, nord"
+			theme = {
+				normal = {
+					a = { fg = "#282c34", bg = "#61afef", gui = "bold" }, -- blue
+					b = { fg = "#abb2bf", bg = "#3e4452" },
+					c = { fg = "#abb2bf", bg = "NONE" },
+				},
+				insert = {
+					a = { fg = "#282c34", bg = "#98c379", gui = "bold" }, -- green
+					b = { fg = "#abb2bf", bg = "#3e4452" },
+				},
+				visual = {
+					a = { fg = "#282c34", bg = "#c678dd", gui = "bold" }, -- purple
+					b = { fg = "#abb2bf", bg = "#3e4452" },
+				},
+				replace = {
+					a = { fg = "#282c34", bg = "#e06c75", gui = "bold" }, -- red
+					b = { fg = "#abb2bf", bg = "#3e4452" },
+				},
+				command = {
+					a = { fg = "#282c34", bg = "#e5c07b", gui = "bold" }, -- yellow
+					b = { fg = "#abb2bf", bg = "#3e4452" },
+				},
+				inactive = {
+					a = { fg = "#5c6370", bg = "NONE" },
+					b = { fg = "#5c6370", bg = "NONE" },
+					c = { fg = "#5c6370", bg = "NONE" },
+				},
+			},
 		},
 		sections = {
 			lualine_c = {

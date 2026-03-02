@@ -119,17 +119,18 @@ The script is idempotent — safe to run multiple times.
 
 All tools are installed via Homebrew:
 
-- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow
+- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx
 - **Casks:** font-hack-nerd-font, taproom
 - **SST Tap:** opencode
 - **Brew:** ollama
-- **Cargo:** himalaya (`cargo install himalaya --features oauth2`)
+- **Cargo:** himalaya (`cargo install himalaya --features oauth2`), minesweep, rebels, cloudflare-speed-cli, eilmeldung
+- **pipx:** spotui
 
 ### Linux
 
 | Tool              | Method                              |
 |-------------------|-------------------------------------|
-| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh, pipx, zoxide, unzip, zip, build-essential, libclang-dev, zstd | apt |
+| git, tmux, curl, stow, fish, gpg, wget, bat, fzf, gh, pipx, zoxide, unzip, zip, build-essential, libclang-dev, zstd, libasound2-dev, cmake, perl, libssl-dev, pkg-config, libxml2-dev, libsqlite3-dev | apt |
 | go                | go.dev binary release               |
 | neovim            | GitHub releases binary              |
 | lazygit           | GitHub releases binary              |
@@ -142,7 +143,12 @@ All tools are installed via Homebrew:
 | mongosh           | MongoDB GitHub releases binary      |
 | tree-sitter-cli   | `cargo install tree-sitter-cli`     |
 | himalaya          | `cargo install himalaya --features oauth2` |
+| minesweep         | `cargo install minesweep`           |
+| rebels            | `cargo install rebels`              |
+| cloudflare-speed-cli | `cargo install cloudflare-speed-cli` |
+| eilmeldung        | `cargo install eilmeldung`          |
 | posting           | `pipx install posting`              |
+| spotui            | `pipx install spotui`               |
 
 ### Both platforms (post-install)
 
@@ -223,7 +229,9 @@ and add a line to `packages.config`.
 | bat                 | both  | Cat clone with syntax highlighting                                  |
 | btop                | both  | Resource monitor                                                    |
 | claude-code         | both  | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
+| cloudflare-speed-cli| both  | Network speed test TUI (`cargo install`, alias: `speedtest`)        |
 | copilot-cli         | both  | GitHub Copilot CLI (`gh copilot` extension)                         |
+| eilmeldung          | both  | TUI RSS reader (`cargo install`, alias: `news`)                     |
 | eza                 | both  | Modern ls replacement                                               |
 | fish                | both  | Fish shell — aliases, functions, tmux auto-start                    |
 | font-hack-nerd-font | both  | Hack Nerd Font (cask on macOS, GitHub release on Linux)             |
@@ -233,6 +241,7 @@ and add a line to `packages.config`.
 | himalaya            | macos | Terminal email client (`cargo install` with oauth2 feature)         |
 | lazydocker          | both  | Terminal UI for Docker                                              |
 | lazygit             | both  | Terminal UI for git                                                 |
+| minesweep-rs        | both  | Terminal minesweeper (`cargo install minesweep`, alias: `mines`)    |
 | mongosh             | both  | MongoDB Shell (brew on macOS, binary release on Linux)              |
 | neofetch            | both  | System info display                                                 |
 | nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot                       |
@@ -240,8 +249,11 @@ and add a line to `packages.config`.
 | omf                 | both  | Oh My Fish framework config                                         |
 | opencode            | macos | AI coding assistant (SST tap)                                       |
 | posting             | both  | TUI HTTP client — Atom One Dark theme (brew on macOS, pipx on Linux)|
+| rebels-in-the-sky   | both  | Terminal space game (`cargo install rebels`, alias: `rit`)          |
 | rust                | both  | Rust toolchain (brew on macOS, rustup on Linux)                     |
 | sdkman              | both  | SDK manager for JVM tools — Java, Kotlin, Gradle (curl installer)   |
+| spotui              | both  | Spotify TUI (`pipx install spotui`, alias: `spot`)                  |
+| sshtron             | both  | Multiplayer tron over SSH (alias only: `tron`)                      |
 | starship            | both  | Cross-shell prompt                                                  |
 | stow                | both  | Symlink manager used to deploy dotfiles                             |
 | taproom             | macos | Homebrew GUI (cask)                                                 |
@@ -284,17 +296,22 @@ nvim --headless "+Lazy! sync" +qa
 
 ### Fish
 
-| Alias    | Expands to                                          |
-|----------|-----------------------------------------------------|
-| `c`      | `clear`                                             |
-| `l`      | `eza --long --header --all --color=auto`            |
-| `tree`   | `eza --tree --long --header --all --color=auto`     |
-| `v`      | `nvim`                                              |
-| `g`      | `lazygit`                                           |
-| `d`      | `lazydocker`                                        |
-| `k`      | `k9s`                                               |
-| `q`      | `exit`                                              |
-| `Alt+Cr` | Reload fish + tmux config                           |
+| Alias       | Expands to                                          |
+|-------------|-----------------------------------------------------|
+| `c`         | `clear`                                             |
+| `l`         | `eza --long --header --all --color=auto`            |
+| `tree`      | `eza --tree --long --header --all --color=auto`     |
+| `v`         | `nvim`                                              |
+| `g`         | `lazygit`                                           |
+| `d`         | `lazydocker`                                        |
+| `q`         | `exit`                                              |
+| `mines`     | `minesweep`                                         |
+| `rit`       | `rebels`                                            |
+| `tron`      | `ssh sshtron.zachlatta.com`                         |
+| `speedtest` | `cloudflare-speed-cli`                              |
+| `spot`      | `spotui`                                            |
+| `news`      | `eilmeldung`                                        |
+| `Alt+Cr`    | Reload fish + tmux config                           |
 
 ---
 

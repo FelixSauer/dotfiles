@@ -26,6 +26,18 @@ alias g    lazygit
 alias d    laszydocker
 alias q    exit
 
+# --- Games ---------------------------------------------------
+alias mines 'minesweep'
+alias rit   'rebels'
+alias tron  'ssh sshtron.zachlatta.com'
+
+# --- Network -------------------------------------------------
+alias speedtest 'cloudflare-speed-cli'
+
+# --- Media / News --------------------------------------------
+alias spot 'spotui'
+alias news 'eilmeldung'
+
 
 # --- Keybindings --------------------------------------------
 if status is-interactive

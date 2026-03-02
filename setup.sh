@@ -66,7 +66,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow cmake pipx)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -106,6 +106,51 @@ install_macos() {
         log_ok "himalaya"
     fi
 
+    # minesweep-rs — terminal minesweeper
+    if command -v minesweep &>/dev/null; then
+        log_ok "minesweep already installed"
+    else
+        log_info "Compiling minesweep..."
+        cargo install minesweep
+        log_ok "minesweep"
+    fi
+
+    # rebels-in-the-sky — terminal space game
+    if command -v rebels &>/dev/null; then
+        log_ok "rebels already installed"
+    else
+        log_info "Compiling rebels..."
+        cargo install rebels
+        log_ok "rebels"
+    fi
+
+    # cloudflare-speed-cli — network speed test
+    if command -v cloudflare-speed-cli &>/dev/null; then
+        log_ok "cloudflare-speed-cli already installed"
+    else
+        log_info "Compiling cloudflare-speed-cli..."
+        cargo install cloudflare-speed-cli
+        log_ok "cloudflare-speed-cli"
+    fi
+
+    # eilmeldung — TUI RSS reader
+    if command -v eilmeldung &>/dev/null; then
+        log_ok "eilmeldung already installed"
+    else
+        log_info "Compiling eilmeldung..."
+        cargo install eilmeldung
+        log_ok "eilmeldung"
+    fi
+
+    # spotui — Spotify TUI via pipx
+    if command -v spotui &>/dev/null; then
+        log_ok "spotui already installed"
+    else
+        log_info "Installing spotui..."
+        pipx install spotui
+        log_ok "spotui"
+    fi
+
     local casks=(font-hack-nerd-font taproom)
 
     for cask in "${casks[@]}"; do
@@ -128,7 +173,7 @@ install_linux() {
 
     sudo apt-get update -qq
 
-    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide unzip zip build-essential libclang-dev zstd)
+    local packages=(git tmux curl stow fish gpg wget bat fzf gh pipx zoxide unzip zip build-essential libclang-dev zstd libasound2-dev cmake perl libssl-dev pkg-config libxml2-dev libsqlite3-dev)
 
     for pkg in "${packages[@]}"; do
         if dpkg -s "$pkg" &>/dev/null 2>&1; then
@@ -277,6 +322,51 @@ install_linux() {
         log_info "Compiling himalaya..."
         cargo install himalaya --features oauth2 --locked
         log_ok "himalaya"
+    fi
+
+    # minesweep-rs — terminal minesweeper
+    if command -v minesweep &>/dev/null; then
+        log_ok "minesweep already installed"
+    else
+        log_info "Compiling minesweep..."
+        cargo install minesweep
+        log_ok "minesweep"
+    fi
+
+    # rebels-in-the-sky — terminal space game
+    if command -v rebels &>/dev/null; then
+        log_ok "rebels already installed"
+    else
+        log_info "Compiling rebels..."
+        cargo install rebels
+        log_ok "rebels"
+    fi
+
+    # cloudflare-speed-cli — network speed test
+    if command -v cloudflare-speed-cli &>/dev/null; then
+        log_ok "cloudflare-speed-cli already installed"
+    else
+        log_info "Compiling cloudflare-speed-cli..."
+        cargo install cloudflare-speed-cli
+        log_ok "cloudflare-speed-cli"
+    fi
+
+    # eilmeldung — TUI RSS reader
+    if command -v eilmeldung &>/dev/null; then
+        log_ok "eilmeldung already installed"
+    else
+        log_info "Compiling eilmeldung..."
+        cargo install eilmeldung
+        log_ok "eilmeldung"
+    fi
+
+    # spotui — Spotify TUI via pipx
+    if command -v spotui &>/dev/null; then
+        log_ok "spotui already installed"
+    else
+        log_info "Installing spotui..."
+        pipx install spotui
+        log_ok "spotui"
     fi
 
     # glow — markdown renderer from GitHub releases
