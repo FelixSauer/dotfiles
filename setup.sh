@@ -66,7 +66,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow cmake pipx direnv)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow cmake pipx direnv biome)
 
     for pkg in "${packages[@]}"; do
         if brew list --formula "$pkg" &>/dev/null 2>&1; then
@@ -124,13 +124,13 @@ install_macos() {
         log_ok "rebels"
     fi
 
-    # cloudflare-speed-cli — network speed test
-    if command -v cloudflare-speed-cli &>/dev/null; then
-        log_ok "cloudflare-speed-cli already installed"
+    # cfspeedtest — Cloudflare network speed test
+    if command -v cfspeedtest &>/dev/null; then
+        log_ok "cfspeedtest already installed"
     else
-        log_info "Compiling cloudflare-speed-cli..."
-        cargo install cloudflare-speed-cli
-        log_ok "cloudflare-speed-cli"
+        log_info "Compiling cfspeedtest..."
+        cargo install cfspeedtest
+        log_ok "cfspeedtest"
     fi
 
     # eilmeldung — TUI RSS reader
@@ -342,13 +342,13 @@ install_linux() {
         log_ok "rebels"
     fi
 
-    # cloudflare-speed-cli — network speed test
-    if command -v cloudflare-speed-cli &>/dev/null; then
-        log_ok "cloudflare-speed-cli already installed"
+    # cfspeedtest — Cloudflare network speed test
+    if command -v cfspeedtest &>/dev/null; then
+        log_ok "cfspeedtest already installed"
     else
-        log_info "Compiling cloudflare-speed-cli..."
-        cargo install cloudflare-speed-cli
-        log_ok "cloudflare-speed-cli"
+        log_info "Compiling cfspeedtest..."
+        cargo install cfspeedtest
+        log_ok "cfspeedtest"
     fi
 
     # eilmeldung — TUI RSS reader
@@ -382,6 +382,19 @@ install_linux() {
         find "$glow_tmp" -name glow -type f -executable -exec sudo install {} -D -t /usr/local/bin/ \;
         rm -rf "$glow_tmp" glow.tar.gz
         log_ok "glow"
+    fi
+
+    # biome — fast formatter and linter for web projects
+    if command -v biome &>/dev/null; then
+        log_ok "biome already installed"
+    else
+        log_info "Installing biome..."
+        local biome_version
+        biome_version=$(curl -s "https://api.github.com/repos/biomejs/biome/releases/latest" | grep -Po '"tag_name": "cli/v\K[^"]*')
+        curl -sLo /tmp/biome "https://github.com/biomejs/biome/releases/download/cli/v${biome_version}/biome-linux-x64"
+        sudo install /tmp/biome -D -t /usr/local/bin/
+        rm /tmp/biome
+        log_ok "biome"
     fi
 
     # posting — TUI HTTP client via pipx
@@ -449,6 +462,15 @@ post_install() {
         log_ok "TPM installed — press Prefix+I inside tmux to load plugins"
     else
         log_ok "tpm already installed"
+    fi
+
+    # oh-my-fish — Fish shell framework
+    if [[ -d "$HOME/.local/share/omf" ]]; then
+        log_ok "oh-my-fish already installed"
+    else
+        log_info "Installing oh-my-fish..."
+        curl -sL https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+        log_ok "oh-my-fish"
     fi
 
     # Ollama — apply custom Modelfiles

@@ -22,9 +22,13 @@ alias l    'eza --long --header --all --color=auto'
 alias ls   'eza --long --header --all --color=auto'
 alias tree 'eza --tree --long --header --all --color=auto'
 alias v    nvim
-alias g    lazygit
 alias d    lazydocker
 alias q    exit
+
+# --- Dev Tools -----------------------------------------------
+alias cat  'bat --paging=never'
+alias gl   'glow'
+alias post 'posting'
 
 # --- Games ---------------------------------------------------
 alias mines 'minesweep'
@@ -32,7 +36,7 @@ alias rit   'rebels'
 alias tron  'ssh sshtron.zachlatta.com'
 
 # --- Network -------------------------------------------------
-alias speedtest 'cloudflare-speed-cli'
+alias speedtest 'cfspeedtest'
 
 # --- Media / News --------------------------------------------
 alias spot 'spotui'
@@ -42,6 +46,7 @@ alias news 'eilmeldung'
 # --- Keybindings --------------------------------------------
 if status is-interactive
     bind \e\cr reload_all_configs
+    bind \ez 'zi\n'
 end
 
 
@@ -51,6 +56,8 @@ starship init fish | source
 zoxide init fish | source
 
 direnv hook fish | source
+
+fzf --fish | source
 
 # opencode
 fish_add_path /Users/Felix.Sauer/.opencode/bin

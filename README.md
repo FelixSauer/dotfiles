@@ -1,9 +1,8 @@
 ```
-  _|          _|_|                _|    _|_|  _|  _|
-  _|        _|    _|  _|_|_|    _|_|  _|      _|  _|
-  _|        _|    _|    _|        _|  _|_|_|  _|_|_|_|
-  _|        _|    _|    _|        _|  _|      _|  _|
-  _|_|_|_|    _|_|    _|_|_|_|   _|    _|_|  _|  _|
+    _     _    __ _ _
+ __| |___| |_ / _(_) |___ ___
+/ _` / _ \  _|  _| | / -_|_-<
+\__,_\___/\__|_| |_|_\___/__/
 ```
 
 Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
@@ -19,68 +18,16 @@ so GNU Stow can create the correct symlinks automatically.
 ```
 dotfiles/
 ├── setup.sh              # Bootstrap script (install + stow)
-├── uninstall.sh          # Reverse of setup (unstow + optional uninstall)
 ├── packages.config       # OS-specific package assignments
-├── .gitignore
 │
-├── btop/
-│   └── .config/btop/
-│       └── btop.conf
-│
-├── fish/
+├── fish/                 # Example: single config file
 │   └── .config/fish/
-│       ├── config.fish
-│       ├── functions/
-│       └── conf.d/
+│       └── config.fish
 │
-├── himalaya/
-│   └── .config/himalaya/
-│
-├── kitty/
-│   └── .config/kitty/
-│
-├── lazygit/
-│   └── .config/lazygit/
-│       └── config.yml
-│
-├── neofetch/
-│   └── .config/neofetch/
-│       └── config.conf
-│
-├── nvim/
-│   └── .config/nvim/
-│       ├── init.lua
-│       └── lua/
-│           ├── core/
-│           └── plugins/
-│
-├── ollama/
-│   ├── deepseek-r1-32b.Modelfile
-│   ├── llama3.2-3b.Modelfile
-│   ├── llama3.3-70b.Modelfile
-│   └── qwen2.5-coder-32b.Modelfile
-│
-├── omf/
-│   └── .config/omf/
-│
-├── opencode/
-│   └── .config/opencode/
-│
-├── posting/
-│   ├── .config/posting/
-│   │   └── config.yaml
-│   └── .local/share/posting/
-│       └── themes/
-│           └── atom-one-dark.yaml
-│
-├── starship/
-│   └── .config/
-│       └── starship.toml
-│
-└── tmux/
-    └── .config/tmux/
-        ├── tmux.conf
-        └── plugins/
+└── nvim/                 # Example: nested structure
+    └── .config/nvim/
+        ├── init.lua
+        └── lua/
 ```
 
 ### How GNU Stow works
@@ -125,11 +72,11 @@ The script is idempotent — safe to run multiple times.
 
 All tools are installed via Homebrew:
 
-- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx
+- **Formulas:** git, neovim, tmux, curl, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx, biome
 - **Casks:** font-hack-nerd-font, taproom
 - **SST Tap:** opencode
 - **Brew:** ollama
-- **Cargo:** himalaya (`cargo install himalaya --features oauth2`), minesweep, rebels, cloudflare-speed-cli, eilmeldung
+- **Cargo:** himalaya (`cargo install himalaya --features oauth2`), minesweep, rebels, cfspeedtest, eilmeldung
 - **pipx:** spotui
 
 ### Linux
@@ -142,6 +89,7 @@ All tools are installed via Homebrew:
 | lazygit           | GitHub releases binary              |
 | lazydocker        | GitHub releases binary              |
 | glow              | GitHub releases binary              |
+| biome             | GitHub releases binary              |
 | eza               | Official apt repo                   |
 | starship          | Install script (starship.rs)        |
 | font-hack-nerd-font | GitHub release zip (~/.local/share/fonts) |
@@ -151,7 +99,7 @@ All tools are installed via Homebrew:
 | himalaya          | `cargo install himalaya --features oauth2` |
 | minesweep         | `cargo install minesweep`           |
 | rebels            | `cargo install rebels`              |
-| cloudflare-speed-cli | `cargo install cloudflare-speed-cli` |
+| cfspeedtest | `cargo install cfspeedtest` |
 | eilmeldung        | `cargo install eilmeldung`          |
 | posting           | `pipx install posting`              |
 | spotui            | `pipx install spotui`               |
@@ -160,6 +108,7 @@ All tools are installed via Homebrew:
 
 - **SDKMAN** — curl installer (`https://get.sdkman.io`)
 - **TPM** — git clone
+- **oh-my-fish** — curl installer (`https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install`)
 - **gh copilot** — `gh extension install github/gh-copilot` (requires `gh auth login` first)
 - **claude-code** — npm only, installed manually (see below)
 - **Ollama Modelfiles** — custom Modelfiles from `ollama/` are applied if ollama is available
@@ -233,9 +182,10 @@ and add a line to `packages.config`.
 | Package             | OS    | Description                                                         |
 |---------------------|-------|---------------------------------------------------------------------|
 | bat                 | both  | Cat clone with syntax highlighting                                  |
+| biome               | both  | Fast formatter and linter for web projects (brew on macOS, GitHub release on Linux) |
 | btop                | both  | Resource monitor                                                    |
 | claude-code         | both  | Anthropic Claude CLI (manual: `npm install -g @anthropic-ai/claude-code`) |
-| cloudflare-speed-cli| both  | Network speed test TUI (`cargo install`, alias: `speedtest`)        |
+| cfspeedtest| both  | Network speed test TUI (`cargo install`, alias: `speedtest`)        |
 | copilot-cli         | both  | GitHub Copilot CLI (`gh copilot` extension)                         |
 | eilmeldung          | both  | TUI RSS reader (`cargo install`, alias: `news`)                     |
 | eza                 | both  | Modern ls replacement                                               |
@@ -252,7 +202,7 @@ and add a line to `packages.config`.
 | neofetch            | both  | System info display                                                 |
 | nvim                | both  | Neovim — Lazy.nvim, LSP, Treesitter, Copilot, onedarkpro theme      |
 | ollama              | macos | Local LLM runtime + custom Modelfiles                               |
-| omf                 | both  | Oh My Fish framework config                                         |
+| omf                 | both  | Oh My Fish framework — installed via curl, config stowed from `omf/` |
 | opencode            | macos | AI coding assistant (SST tap)                                       |
 | posting             | both  | TUI HTTP client — onedark theme (brew on macOS, pipx on Linux)      |
 | rebels-in-the-sky   | both  | Terminal space game (`cargo install rebels`, alias: `rit`)          |
@@ -314,33 +264,102 @@ Status bar: session name (green) on the left, clock + optional PREFIX indicator 
 
 ### Tmux (prefix: Ctrl+s)
 
-| Binding              | Action                     |
-|----------------------|----------------------------|
-| `Prefix + +`         | Split pane horizontally    |
-| `Prefix + -`         | Split pane vertically      |
-| `Prefix + h/j/k/l`   | Navigate panes (Vim-style) |
-| `Alt + arrows`       | Navigate panes (no prefix) |
-| `Prefix + r`         | Reload tmux config         |
-| `Prefix + I`         | Install TPM plugins        |
+**Panes**
+
+| Binding            | Action                      |
+|--------------------|-----------------------------|
+| `Prefix + +`       | Split pane horizontally     |
+| `Prefix + -`       | Split pane vertically       |
+| `Prefix + h/j/k/l` | Navigate panes (Vim-style)  |
+| `Alt + arrows`     | Navigate panes (no prefix)  |
+| `Prefix + z`       | Zoom pane (toggle fullscreen)|
+| `Prefix + x`       | Kill pane                   |
+
+**Windows**
+
+| Binding          | Action                  |
+|------------------|-------------------------|
+| `Prefix + t`     | New window              |
+| `Prefix + ,`     | Rename window           |
+| `Prefix + 1-9`   | Switch to window by index |
+| `Prefix + n/p`   | Next / previous window  |
+| `Prefix + &`     | Kill window             |
+
+**Sessions**
+
+| Binding          | Action                  |
+|------------------|-------------------------|
+| `Prefix + d`     | Detach session          |
+| `Prefix + s`     | List sessions           |
+| `Prefix + $`     | Rename session          |
+
+**Copy mode**
+
+| Binding          | Action                  |
+|------------------|-------------------------|
+| `Prefix + [`     | Enter copy mode         |
+| `q`              | Exit copy mode          |
+| `v`              | Begin selection (vi)    |
+| `y`              | Copy selection (vi)     |
+| `Prefix + ]`     | Paste buffer            |
+
+**Other**
+
+| Binding          | Action                        |
+|------------------|-------------------------------|
+| `Prefix + r`     | Reload tmux config            |
+| `Prefix + I`     | Install TPM plugins           |
+| `Prefix + U`     | Update TPM plugins            |
 
 ### Fish
 
-| Alias       | Expands to                                          |
-|-------------|-----------------------------------------------------|
-| `c`         | `clear`                                             |
-| `l`         | `eza --long --header --all --color=auto`            |
-| `tree`      | `eza --tree --long --header --all --color=auto`     |
-| `v`         | `nvim`                                              |
-| `g`         | `lazygit`                                           |
-| `d`         | `lazydocker`                                        |
-| `q`         | `exit`                                              |
-| `mines`     | `minesweep`                                         |
-| `rit`       | `rebels`                                            |
-| `tron`      | `ssh sshtron.zachlatta.com`                         |
-| `speedtest` | `cloudflare-speed-cli`                              |
-| `spot`      | `spotui`                                            |
-| `news`      | `eilmeldung`                                        |
-| `Alt+Cr`    | Reload fish + tmux config                           |
+**Keybindings**
+
+| Binding      | Action                                      |
+|--------------|---------------------------------------------|
+| `Ctrl+R`     | Fuzzy history search (fzf)                  |
+| `Ctrl+T`     | Fuzzy file search — insert path (fzf)       |
+| `Alt+C`      | Fuzzy directory jump (fzf)                  |
+| `Alt+Z`      | Interactive zoxide jump (`zi`)              |
+| `Alt+Ctrl+R` | Reload fish + tmux config                   |
+
+**Functions**
+
+| Command       | Description                                        |
+|---------------|----------------------------------------------------|
+| `g`           | `lazygit` — only inside a git repo, hint otherwise |
+| `mkcd <path>` | `mkdir -p` + `cd` in one step                      |
+| `dots`        | Jump to `~/dotfiles` and show `git status --short` |
+
+**Aliases — General**
+
+| Alias  | Expands to                                      |
+|--------|-------------------------------------------------|
+| `c`    | `clear`                                         |
+| `l`    | `eza --long --header --all --color=auto`        |
+| `tree` | `eza --tree --long --header --all --color=auto` |
+| `v`    | `nvim`                                          |
+| `d`    | `lazydocker`                                    |
+| `q`    | `exit`                                          |
+
+**Aliases — Dev Tools**
+
+| Alias  | Expands to              |
+|--------|-------------------------|
+| `cat`  | `bat --paging=never`    |
+| `gl`   | `glow`                  |
+| `post` | `posting`               |
+
+**Aliases — Network / Media / Games**
+
+| Alias       | Expands to                    |
+|-------------|-------------------------------|
+| `speedtest` | `cfspeedtest`                 |
+| `spot`      | `spotui`                      |
+| `news`      | `eilmeldung`                  |
+| `mines`     | `minesweep`                   |
+| `rit`       | `rebels`                      |
+| `tron`      | `ssh sshtron.zachlatta.com`   |
 
 ---
 
