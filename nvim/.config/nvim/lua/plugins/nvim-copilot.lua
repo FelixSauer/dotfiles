@@ -10,8 +10,8 @@ return {
       hide_during_completion = vim.g.ai_cmp,
       keymap = {
         accept = "<Leader><CR>",
-        next = "<M-]>",
-        prev = "<M-[>",
+        next = "<M-n>",
+        prev = "<M-p>",
       },
     },
     panel = { enabled = false },

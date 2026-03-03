@@ -1,4 +1,4 @@
-```
+
     _     _    __ _ _
  __| |___| |_ / _(_) |___ ___
 / _` / _ \  _|  _| | / -_|_-<
@@ -176,6 +176,17 @@ nvim --headless "+Lazy! sync" +qa   # Neovim plugins
 
 ## Key Bindings
 
+### German keyboard (QWERTZ)
+
+Kitty is configured with `macos_option_as_alt left`:
+
+- **Left Option** = Alt/Meta modifier — used by tmux, nvim, and fish bindings
+- **Right Option** = macOS special characters — types `[` `]` `{` `}` etc. as usual
+
+This splits the two Option keys so terminal shortcuts and German character input coexist without conflict.
+
+---
+
 ### Tmux (prefix: Ctrl+s)
 
 **Panes**
@@ -185,6 +196,7 @@ nvim --headless "+Lazy! sync" +qa   # Neovim plugins
 | `Prefix + +`         | Split horizontally         |
 | `Prefix + -`         | Split vertically           |
 | `Prefix + h/j/k/l`   | Navigate panes (Vim-style) |
+| `Alt + h/j/k/l`      | Navigate panes (no prefix) |
 | `Alt + arrows`       | Navigate panes (no prefix) |
 | `Prefix + z`         | Zoom pane                  |
 | `Prefix + x`         | Kill pane                  |
@@ -193,6 +205,7 @@ nvim --headless "+Lazy! sync" +qa   # Neovim plugins
 
 | Binding          | Action                  |
 |------------------|-------------------------|
+| `Shift + Tab`    | Next window (no prefix) |
 | `Prefix + t`     | New window              |
 | `Prefix + ,`     | Rename window           |
 | `Prefix + 1-9`   | Switch to window        |

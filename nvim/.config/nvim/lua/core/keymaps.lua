@@ -153,3 +153,7 @@ keymap.set("n", "<leader>de", function()
 end)
 
 vim.keymap.set("n", "<leader>ee", "<Cmd>Neotree toggle<CR>")
+
+-- Paragraph navigation (German keyboard: { and } require Opt+8/9)
+keymap.set({ "n", "v" }, "<M-j>", "}", { desc = "Next paragraph" })
+keymap.set({ "n", "v" }, "<M-k>", "{", { desc = "Previous paragraph" })
