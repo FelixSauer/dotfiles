@@ -42,6 +42,10 @@ alias speedtest 'cfspeedtest'
 alias spot 'spotui'
 alias news 'eilmeldung'
 
+# --- TMux Shortcuts -----------------------------------------
+alias tn 'env TMUX= tmux new-session'
+alias ta 'tmux attach-session -t'
+alias tls 'tmux list-sessions'
 
 # --- Keybindings --------------------------------------------
 if status is-interactive
