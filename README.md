@@ -18,7 +18,7 @@ cd ~/dotfiles && bash setup.sh
 
 `setup.sh` detects the OS, installs all packages, stows configs, and runs post-install steps. Safe to re-run.
 
-An interactive package selector launches before installation. Use `j/k` or arrow keys to navigate, `space` to toggle, `a`/`n` for all/none, `tab` to switch to the Install/Cancel buttons.
+An interactive package selector launches before installation. Use `j/k` or arrow keys to navigate, `space` to toggle, `a`/`n` for all/none, `tab` to switch to the Apply/Cancel buttons. Pressing Apply installs selected packages and uninstalls any previously-installed packages that were deselected.
 
 ---
 
