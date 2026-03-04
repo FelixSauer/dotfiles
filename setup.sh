@@ -473,6 +473,24 @@ post_install() {
         log_ok "oh-my-fish"
     fi
 
+    # Fisher — Fish plugin manager
+    if fish -c "type -q fisher" 2>/dev/null; then
+        log_ok "fisher already installed"
+    else
+        log_info "Installing Fisher..."
+        fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+        log_ok "fisher"
+    fi
+
+    # Fisher plugins
+    if fish -c "fisher list | grep -q pnpm-shell-completion" 2>/dev/null; then
+        log_ok "pnpm-shell-completion already installed"
+    else
+        log_info "Installing pnpm-shell-completion..."
+        fish -c "fisher install g-plane/pnpm-shell-completion"
+        log_ok "pnpm-shell-completion"
+    fi
+
     # Ollama — apply custom Modelfiles
     if command -v ollama &>/dev/null; then
         log_info "Applying Ollama Modelfiles..."

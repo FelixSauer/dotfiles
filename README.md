@@ -67,6 +67,7 @@ stow --delete fish           # remove symlinks
 | eilmeldung          | both | TUI RSS reader (`alias: news`)                                    |
 | eza                 | both | Modern ls replacement                                             |
 | fish                | both | Fish shell — aliases, functions, tmux auto-start                  |
+| fisher              | both | Fish plugin manager (with pnpm-shell-completion)                  |
 | font-hack-nerd-font | both | Hack Nerd Font                                                    |
 | fzf                 | both | Fuzzy finder                                                      |
 | go                  | both | Go toolchain                                                      |

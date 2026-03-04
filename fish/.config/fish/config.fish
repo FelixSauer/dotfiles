@@ -3,17 +3,6 @@ if test -x /opt/homebrew/bin/brew
     /opt/homebrew/bin/brew shellenv | source
 end
 
-
-# --- Tmux Auto-start -----------------------------------------
-if status is-interactive && not set -q TMUX
-     if tmux has-session 2>/dev/null
-         exec tmux attach
-     else
-         exec tmux
-     end
-end
-
-
 # --- General -------------------------------------------------
 set fish_greeting
 
@@ -55,8 +44,6 @@ end
 
 
 # --- Prompt -------------------------------------------------
-starship init fish | source
-
 zoxide init fish | source
 
 direnv hook fish | source
