@@ -18,6 +18,8 @@ cd ~/dotfiles && bash setup.sh
 
 `setup.sh` detects the OS, installs all packages, stows configs, and runs post-install steps. Safe to re-run.
 
+An interactive package selector launches before installation. Use `j/k` or arrow keys to navigate, `space` to toggle, `a`/`n` for all/none, `tab` to switch to the Install/Cancel buttons.
+
 ---
 
 ## Structure
@@ -420,18 +422,20 @@ This splits the two Option keys so terminal shortcuts and German character input
 
 All tools use the [onedarkpro](https://github.com/olimorris/onedarkpro.nvim) `onedark_vivid` palette as a single source of truth.
 
-| Color  | Hex       | Used in                                       |
-|--------|-----------|-----------------------------------------------|
-| red    | `#ef596f` | Lualine Replace mode, tmux PREFIX indicator   |
-| yellow | `#e5c07b` | Lualine Command mode, tmux window activity    |
-| green  | `#89ca78` | Lualine Insert mode, tmux session name        |
-| cyan   | `#2bbac5` | Lualine z-section, tmux clock + copy mode     |
-| blue   | `#61afef` | Lualine Normal mode, tmux active window       |
-| purple | `#d55fde` | Lualine Visual mode, tmux active pane border  |
+| Color  | Hex       | Used in                                                        |
+|--------|-----------|----------------------------------------------------------------|
+| red    | `#ef596f` | Lualine Replace mode, tmux PREFIX indicator, setup.sh errors  |
+| yellow | `#e5c07b` | Lualine Command mode, tmux window activity, setup.sh warnings |
+| green  | `#89ca78` | Lualine Insert mode, tmux session name, setup.sh ok           |
+| cyan   | `#2bbac5` | Lualine z-section, tmux clock + copy mode, setup.sh banner    |
+| blue   | `#61afef` | Lualine Normal mode, tmux active window, setup.sh banner      |
+| purple | `#d55fde` | Lualine Visual mode, tmux active pane border, setup.sh banner |
 
 Neovim uses `olimorris/onedarkpro.nvim` (`onedark_vivid`). Lualine pulls colors at runtime via `require("onedarkpro.helpers").get_colors()` — no hardcoded hex values.
 
 Tmux status bar: session name (green) left, clock + PREFIX indicator (red) right. Active pane border purple, copy-mode selection cyan.
+
+`setup.sh` uses the same hex values as truecolor ANSI codes. Banner gradient: cyan → blue → purple.
 
 ---
 
