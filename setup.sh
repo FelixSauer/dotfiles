@@ -66,7 +66,6 @@ ALL_PACKAGES=(
     "glow:both:glow"
     "direnv:both:direnv"
     "biome:both:biome"
-    "himalaya:both:himalaya (email)"
     "minesweep:both:minesweep"
     "rebels:both:rebels-in-the-sky"
     "cfspeedtest:both:cfspeedtest"
@@ -427,22 +426,11 @@ install_macos() {
     fi
 
     # cmake — build dependency for some cargo packages
-    if should_install "himalaya" || should_install "minesweep" || should_install "rebels" || should_install "cfspeedtest" || should_install "eilmeldung"; then
+    if should_install "minesweep" || should_install "rebels" || should_install "cfspeedtest" || should_install "eilmeldung"; then
         if ! brew list --formula cmake &>/dev/null 2>&1; then
             log_info "Installing cmake (build dependency)..."
             brew install --quiet cmake
             log_ok "cmake"
-        fi
-    fi
-
-    # himalaya — needs oauth2 feature, compile via cargo
-    if should_install "himalaya"; then
-        if command -v himalaya &>/dev/null; then
-            log_ok "himalaya already installed"
-        else
-            log_info "Compiling himalaya..."
-            cargo install himalaya --features oauth2 --locked
-            log_ok "himalaya"
         fi
     fi
 
@@ -696,22 +684,11 @@ install_linux() {
     fi
 
     # cmake — build dependency for some cargo packages
-    if should_install "himalaya" || should_install "minesweep" || should_install "rebels" || should_install "cfspeedtest" || should_install "eilmeldung"; then
+    if should_install "minesweep" || should_install "rebels" || should_install "cfspeedtest" || should_install "eilmeldung"; then
         if ! dpkg -s cmake &>/dev/null 2>&1; then
             log_info "Installing cmake (build dependency)..."
             sudo apt-get install -y --no-install-recommends cmake
             log_ok "cmake"
-        fi
-    fi
-
-    # himalaya — compiled from source via cargo
-    if should_install "himalaya"; then
-        if command -v himalaya &>/dev/null; then
-            log_ok "himalaya already installed"
-        else
-            log_info "Compiling himalaya..."
-            cargo install himalaya --features oauth2 --locked
-            log_ok "himalaya"
         fi
     fi
 

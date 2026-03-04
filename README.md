@@ -1,9 +1,9 @@
 
-```
-    _     _    __ _ _
- __| |___| |_ / _(_) |___ ___
-/ _` / _ \  _|  _| | / -_|_-<
-\__,_\___/\__|_| |_|_\___/__/
+```ansi
+[38;2;43;186;197m    _     _    __ _ _
+[38;2;97;175;239m __| |___| |_ / _(_) |___ ___
+[38;2;97;175;239m/ _` / _ \  _|  _| | / -_|_-<
+[38;2;213;95;222m\__,_\___/\__|_| |_|_\___/__/[0m
 ```
 
 Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/). Supports macOS and Linux.
@@ -74,7 +74,6 @@ stow --delete fish           # remove symlinks
 | fzf                 | both | Fuzzy finder                                                      |
 | go                  | both | Go toolchain                                                      |
 | glow                | both | Terminal markdown renderer (`alias: gl`)                          |
-| himalaya            | mac  | Terminal email client (`cargo install --features oauth2`)         |
 | lazydocker          | both | Terminal UI for Docker (`alias: d`)                               |
 | lazygit             | both | Terminal UI for git (`alias: g`)                                  |
 | minesweep-rs        | both | Terminal minesweeper (`alias: mines`)                             |
@@ -110,7 +109,7 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 | Formulas | git, neovim, tmux, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx, biome |
 | Casks    | font-hack-nerd-font, taproom                                                                                |
 | SST Tap  | opencode                                                                                                    |
-| Cargo    | himalaya (`--features oauth2`), minesweep, rebels, cfspeedtest, eilmeldung                                 |
+| Cargo    | minesweep, rebels, cfspeedtest, eilmeldung                                                                 |
 | pipx     | spotui                                                                                                      |
 
 ### Linux
@@ -130,7 +129,6 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 | rust                | rustup.rs install script                            |
 | mongosh             | MongoDB GitHub releases binary                      |
 | tree-sitter-cli     | `cargo install tree-sitter-cli`                     |
-| himalaya            | `cargo install himalaya --features oauth2`          |
 | minesweep           | `cargo install minesweep`                           |
 | rebels              | `cargo install rebels`                              |
 | cfspeedtest         | `cargo install cfspeedtest`                         |
