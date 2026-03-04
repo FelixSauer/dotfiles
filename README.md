@@ -18,6 +18,8 @@ cd ~/dotfiles && bash setup.sh
 
 `setup.sh` detects the OS, installs all packages, stows configs, and runs post-install steps. Safe to re-run.
 
+An interactive package selector launches before installation. Use `j/k` or arrow keys to navigate, `space` to toggle, `a`/`n` for all/none, `tab` to switch to the Install/Cancel buttons.
+
 ---
 
 ## Structure
@@ -71,8 +73,6 @@ stow --delete fish           # remove symlinks
 | font-hack-nerd-font | both | Hack Nerd Font                                                    |
 | fzf                 | both | Fuzzy finder                                                      |
 | go                  | both | Go toolchain                                                      |
-| glow                | both | Terminal markdown renderer (`alias: gl`)                          |
-| himalaya            | mac  | Terminal email client (`cargo install --features oauth2`)         |
 | lazydocker          | both | Terminal UI for Docker (`alias: d`)                               |
 | lazygit             | both | Terminal UI for git (`alias: g`)                                  |
 | minesweep-rs        | both | Terminal minesweeper (`alias: mines`)                             |
@@ -105,10 +105,10 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 
 | Method   | Packages                                                                                                    |
 |----------|-------------------------------------------------------------------------------------------------------------|
-| Formulas | git, neovim, tmux, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx, biome |
+| Formulas | git, neovim, tmux, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, cmake, pipx, biome |
 | Casks    | font-hack-nerd-font, taproom                                                                                |
 | SST Tap  | opencode                                                                                                    |
-| Cargo    | himalaya (`--features oauth2`), minesweep, rebels, cfspeedtest, eilmeldung                                 |
+| Cargo    | minesweep, rebels, cfspeedtest, eilmeldung                                                                 |
 | pipx     | spotui                                                                                                      |
 
 ### Linux
@@ -120,7 +120,6 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 | neovim              | GitHub releases binary                              |
 | lazygit             | GitHub releases binary                              |
 | lazydocker          | GitHub releases binary                              |
-| glow                | GitHub releases binary                              |
 | biome               | GitHub releases binary                              |
 | eza                 | Official apt repo                                   |
 | starship            | starship.rs install script                          |
@@ -128,7 +127,6 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 | rust                | rustup.rs install script                            |
 | mongosh             | MongoDB GitHub releases binary                      |
 | tree-sitter-cli     | `cargo install tree-sitter-cli`                     |
-| himalaya            | `cargo install himalaya --features oauth2`          |
 | minesweep           | `cargo install minesweep`                           |
 | rebels              | `cargo install rebels`                              |
 | cfspeedtest         | `cargo install cfspeedtest`                         |
@@ -272,7 +270,6 @@ This splits the two Option keys so terminal shortcuts and German character input
 | `d`         | `lazydocker`                                    |
 | `q`         | `exit`                                          |
 | `cat`       | `bat --paging=never`                            |
-| `gl`        | `glow`                                          |
 | `post`      | `posting`                                       |
 | `speedtest` | `cfspeedtest`                                   |
 | `spot`      | `spotui`                                        |
@@ -421,18 +418,20 @@ This splits the two Option keys so terminal shortcuts and German character input
 
 All tools use the [onedarkpro](https://github.com/olimorris/onedarkpro.nvim) `onedark_vivid` palette as a single source of truth.
 
-| Color  | Hex       | Used in                                       |
-|--------|-----------|-----------------------------------------------|
-| red    | `#ef596f` | Lualine Replace mode, tmux PREFIX indicator   |
-| yellow | `#e5c07b` | Lualine Command mode, tmux window activity    |
-| green  | `#89ca78` | Lualine Insert mode, tmux session name        |
-| cyan   | `#2bbac5` | Lualine z-section, tmux clock + copy mode     |
-| blue   | `#61afef` | Lualine Normal mode, tmux active window       |
-| purple | `#d55fde` | Lualine Visual mode, tmux active pane border  |
+| Color  | Hex       | Used in                                                        |
+|--------|-----------|----------------------------------------------------------------|
+| red    | `#ef596f` | Lualine Replace mode, tmux PREFIX indicator, setup.sh errors  |
+| yellow | `#e5c07b` | Lualine Command mode, tmux window activity, setup.sh warnings |
+| green  | `#89ca78` | Lualine Insert mode, tmux session name, setup.sh ok           |
+| cyan   | `#2bbac5` | Lualine z-section, tmux clock + copy mode, setup.sh banner    |
+| blue   | `#61afef` | Lualine Normal mode, tmux active window, setup.sh banner      |
+| purple | `#d55fde` | Lualine Visual mode, tmux active pane border, setup.sh banner |
 
 Neovim uses `olimorris/onedarkpro.nvim` (`onedark_vivid`). Lualine pulls colors at runtime via `require("onedarkpro.helpers").get_colors()` — no hardcoded hex values.
 
 Tmux status bar: session name (green) left, clock + PREFIX indicator (red) right. Active pane border purple, copy-mode selection cyan.
+
+`setup.sh` uses the same hex values as truecolor ANSI codes. Banner gradient: cyan → blue → purple.
 
 ---
 
