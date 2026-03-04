@@ -282,6 +282,140 @@ This splits the two Option keys so terminal shortcuts and German character input
 
 ---
 
+### Neovim (leader: Space)
+
+**General**
+
+| Binding       | Action                  |
+|---------------|-------------------------|
+| `<leader>ww`  | Save                    |
+| `<leader>wq`  | Save and quit           |
+| `<leader>qq`  | Quit without saving     |
+| `Cmd+S`       | Save                    |
+| `Cmd+X`       | Close buffer            |
+| `gx`          | Open URL under cursor   |
+
+**Splits**
+
+| Binding        | Action                        |
+|----------------|-------------------------------|
+| `<leader>sv`   | Split vertically              |
+| `<leader>sh`   | Split horizontally            |
+| `<leader>se`   | Equalize split widths         |
+| `<leader>sx`   | Close split                   |
+| `<leader>sj/k` | Resize height shorter/taller  |
+| `<leader>sl`   | Resize width wider            |
+| `<leader>sm`   | Toggle maximize split         |
+
+**Tabs**
+
+| Binding       | Action          |
+|---------------|-----------------|
+| `<leader>to`  | New tab         |
+| `<leader>tx`  | Close tab       |
+| `<leader>tn`  | Next tab        |
+| `<leader>tp`  | Previous tab    |
+
+**File Tree (Neo-tree)**
+
+| Binding       | Action               |
+|---------------|----------------------|
+| `<leader>ee`  | Toggle file tree     |
+
+**Telescope**
+
+| Binding       | Action                            |
+|---------------|-----------------------------------|
+| `<leader>ff`  | Find files                        |
+| `<leader>fg`  | Live grep                         |
+| `<leader>fb`  | Open buffers                      |
+| `<leader>fh`  | Help tags                         |
+| `<leader>fs`  | Fuzzy find in current buffer      |
+| `<leader>fo`  | LSP document symbols              |
+| `<leader>fi`  | LSP incoming calls                |
+| `<leader>fm`  | Find functions/methods            |
+| `<leader>ft`  | Grep in current nvim-tree node    |
+
+**Harpoon**
+
+| Binding        | Action                   |
+|----------------|--------------------------|
+| `<leader>ha`   | Add file                 |
+| `<leader>hh`   | Toggle quick menu        |
+| `<leader>h1-9` | Navigate to file 1-9     |
+
+**LSP**
+
+| Binding       | Action                    |
+|---------------|---------------------------|
+| `<leader>gg`  | Hover docs                |
+| `<leader>gd`  | Go to definition          |
+| `<leader>gD`  | Go to declaration         |
+| `<leader>gi`  | Go to implementation      |
+| `<leader>gt`  | Go to type definition     |
+| `<leader>gr`  | References                |
+| `<leader>gs`  | Signature help            |
+| `<leader>rr`  | Rename symbol             |
+| `<leader>gf`  | Format (normal + visual)  |
+| `<leader>ga`  | Code action               |
+| `<leader>gl`  | Open diagnostics float    |
+| `<leader>gp`  | Previous diagnostic       |
+| `<leader>gn`  | Next diagnostic           |
+| `Ctrl+Space`  | Trigger completion        |
+
+**Diff / Merge**
+
+| Binding       | Action                         |
+|---------------|--------------------------------|
+| `<leader>cc`  | Put diff to other              |
+| `<leader>cj`  | Get diff from left (local)     |
+| `<leader>ck`  | Get diff from right (remote)   |
+| `<leader>cn`  | Next diff hunk                 |
+| `<leader>cp`  | Previous diff hunk             |
+
+**Quickfix**
+
+| Binding       | Action                    |
+|---------------|---------------------------|
+| `<leader>qo`  | Open quickfix list        |
+| `<leader>qf`  | First item                |
+| `<leader>qn`  | Next item                 |
+| `<leader>qp`  | Previous item             |
+| `<leader>ql`  | Last item                 |
+| `<leader>qc`  | Close quickfix list       |
+
+**Debugging (DAP)**
+
+| Binding        | Action                       |
+|----------------|------------------------------|
+| `<leader>bb`   | Toggle breakpoint            |
+| `<leader>bc`   | Conditional breakpoint       |
+| `<leader>bl`   | Log point                    |
+| `<leader>br`   | Clear breakpoints            |
+| `<leader>ba`   | List breakpoints             |
+| `<leader>dc`   | Continue                     |
+| `<leader>dj`   | Step over                    |
+| `<leader>dk`   | Step into                    |
+| `<leader>do`   | Step out                     |
+| `<leader>dd`   | Disconnect + close UI        |
+| `<leader>dt`   | Terminate + close UI         |
+| `<leader>dr`   | Toggle REPL                  |
+| `<leader>dl`   | Run last                     |
+| `<leader>di`   | Hover variable               |
+| `<leader>d?`   | Scopes float                 |
+| `<leader>df`   | Telescope DAP frames         |
+| `<leader>dh`   | Telescope DAP commands       |
+| `<leader>de`   | Telescope diagnostics (errors)|
+
+**Navigation**
+
+| Binding   | Action            |
+|-----------|-------------------|
+| `Alt+J`   | Next paragraph    |
+| `Alt+K`   | Previous paragraph|
+
+---
+
 ## Theme
 
 All tools use the [onedarkpro](https://github.com/olimorris/onedarkpro.nvim) `onedark_vivid` palette as a single source of truth.
