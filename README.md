@@ -73,7 +73,6 @@ stow --delete fish           # remove symlinks
 | font-hack-nerd-font | both | Hack Nerd Font                                                    |
 | fzf                 | both | Fuzzy finder                                                      |
 | go                  | both | Go toolchain                                                      |
-| glow                | both | Terminal markdown renderer (`alias: gl`)                          |
 | lazydocker          | both | Terminal UI for Docker (`alias: d`)                               |
 | lazygit             | both | Terminal UI for git (`alias: g`)                                  |
 | minesweep-rs        | both | Terminal minesweeper (`alias: mines`)                             |
@@ -106,7 +105,7 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 
 | Method   | Packages                                                                                                    |
 |----------|-------------------------------------------------------------------------------------------------------------|
-| Formulas | git, neovim, tmux, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, glow, cmake, pipx, biome |
+| Formulas | git, neovim, tmux, stow, fish, starship, eza, bat, fzf, lazygit, lazydocker, gh, go, mongosh, tree-sitter, rustup, posting, zoxide, cmake, pipx, biome |
 | Casks    | font-hack-nerd-font, taproom                                                                                |
 | SST Tap  | opencode                                                                                                    |
 | Cargo    | minesweep, rebels, cfspeedtest, eilmeldung                                                                 |
@@ -121,7 +120,6 @@ All packages via Homebrew. `bash setup.sh` handles everything.
 | neovim              | GitHub releases binary                              |
 | lazygit             | GitHub releases binary                              |
 | lazydocker          | GitHub releases binary                              |
-| glow                | GitHub releases binary                              |
 | biome               | GitHub releases binary                              |
 | eza                 | Official apt repo                                   |
 | starship            | starship.rs install script                          |
@@ -272,7 +270,6 @@ This splits the two Option keys so terminal shortcuts and German character input
 | `d`         | `lazydocker`                                    |
 | `q`         | `exit`                                          |
 | `cat`       | `bat --paging=never`                            |
-| `gl`        | `glow`                                          |
 | `post`      | `posting`                                       |
 | `speedtest` | `cfspeedtest`                                   |
 | `spot`      | `spotui`                                        |

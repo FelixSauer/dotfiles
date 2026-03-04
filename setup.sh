@@ -63,7 +63,6 @@ ALL_PACKAGES=(
     "rustup:both:rustup / cargo"
     "posting:both:posting"
     "zoxide:both:zoxide"
-    "glow:both:glow"
     "direnv:both:direnv"
     "biome:both:biome"
     "minesweep:both:minesweep"
@@ -389,7 +388,7 @@ install_macos() {
         log_ok "brew"
     fi
 
-    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide glow direnv biome)
+    local packages=(git neovim tmux curl stow fish starship eza bat fzf lazygit lazydocker gh go mongosh tree-sitter rustup posting zoxide direnv biome)
 
     for pkg in "${packages[@]}"; do
         should_install "$pkg" || continue
@@ -756,22 +755,6 @@ install_linux() {
         fi
     fi
 
-    # glow — markdown renderer from GitHub releases
-    if should_install "glow"; then
-        if command -v glow &>/dev/null; then
-            log_ok "glow already installed"
-        else
-            log_info "Installing glow..."
-            local glow_version
-            glow_version=$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-            curl -sLo glow.tar.gz "https://github.com/charmbracelet/glow/releases/download/v${glow_version}/glow_${glow_version}_linux_x86_64.tar.gz"
-            local glow_tmp; glow_tmp=$(mktemp -d)
-            tar xf glow.tar.gz -C "$glow_tmp"
-            find "$glow_tmp" -name glow -type f -executable -exec sudo install {} -D -t /usr/local/bin/ \;
-            rm -rf "$glow_tmp" glow.tar.gz
-            log_ok "glow"
-        fi
-    fi
 
     # biome — fast formatter and linter for web projects
     if should_install "biome"; then
