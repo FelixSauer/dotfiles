@@ -63,6 +63,9 @@ direnv hook fish | source
 
 fzf --fish | source
 
+# --- FZF Configuration ---------------------------------------
+set -gx FZF_DEFAULT_OPTS "--preview 'bat --color=always --style=numbers --line-range=:500 {}' --bind 'enter:become(nvim {})'"
+
 # opencode
 fish_add_path /Users/Felix.Sauer/.opencode/bin
 
