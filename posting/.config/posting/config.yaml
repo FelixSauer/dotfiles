@@ -1,1 +1,6 @@
-theme: atom-one-dark
+theme: onedark-pro
+response:
+  prettify_json: false
+heading:
+  visible: true
+  show_host: false
