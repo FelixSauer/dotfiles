@@ -13,6 +13,9 @@ return {
 
 		require("lualine").setup({
 			options = {
+				disabled_filetypes = {
+					statusline = { "neo-tree" },
+				},
 				theme = {
 					normal = {
 						a = { fg = c.bg, bg = c.blue,   gui = "bold" },
