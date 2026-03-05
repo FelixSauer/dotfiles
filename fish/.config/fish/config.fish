@@ -18,7 +18,6 @@ alias q    exit
 
 # --- Dev Tools -----------------------------------------------
 alias cat  'bat --paging=never'
-alias gl   'glow'
 alias post 'posting'
 
 # --- Games ---------------------------------------------------

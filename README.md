@@ -11,14 +11,28 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/). S
 
 ## Setup
 
+**Quick install** — installs everything, no interaction:
+
 ```bash
-git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
+curl -fsSL https://raw.githubusercontent.com/FelixSauer/dotfiles/main/install.sh | bash
+```
+
+**Interactive install** — choose which packages to install:
+
+```bash
+git clone https://github.com/FelixSauer/dotfiles.git ~/dotfiles
 cd ~/dotfiles && bash setup.sh
 ```
 
-`setup.sh` detects the OS, installs all packages, stows configs, and runs post-install steps. Safe to re-run.
+Both scripts detect the OS, install packages, stow configs, and run post-install steps. Safe to re-run.
 
-An interactive package selector launches before installation. Use `j/k` or arrow keys to navigate, `space` to toggle, `a`/`n` for all/none, `tab` to switch to the Apply/Cancel buttons. Pressing Apply installs selected packages and uninstalls any previously-installed packages that were deselected.
+The interactive selector lets you toggle packages with `j/k` / arrow keys, `space`, `a`/`n` for all/none, and `tab` to reach the Apply/Cancel buttons. Apply installs selected packages and removes any previously-installed packages that were deselected.
+
+`setup.sh` also accepts `--yes` / `-y` directly:
+
+```bash
+bash setup.sh --yes
+```
 
 ---
 
@@ -28,7 +42,8 @@ Each package directory mirrors `$HOME` — Stow creates symlinks automatically.
 
 ```
 dotfiles/
-├── setup.sh          # install + stow
+├── install.sh        # non-interactive: installs all + stows
+├── setup.sh          # interactive installer + stow
 ├── packages.config   # OS-specific assignments
 │
 ├── fish/             # example: single config file
@@ -166,7 +181,7 @@ npm install -g @anthropic-ai/claude-code
 
 **Update everything**
 ```bash
-cd ~/dotfiles && git pull && bash setup.sh
+cd ~/dotfiles && git pull && bash install.sh
 nvim --headless "+Lazy! sync" +qa   # Neovim plugins
 # Tmux plugins: Prefix + U inside tmux
 ```

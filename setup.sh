@@ -1016,7 +1016,17 @@ main() {
   local os
   os="$(detect_os)"
 
-  select_packages "$os"
+  if [[ "${1:-}" == "--yes" || "${1:-}" == "-y" ]]; then
+    log_step "Installing all packages for $os"
+    local entry name target_os label
+    for entry in "${ALL_PACKAGES[@]}"; do
+      IFS=: read -r name target_os label <<<"$entry"
+      [[ "$target_os" != "both" && "$target_os" != "$os" ]] && continue
+      SELECTED_PKGS+=("$name")
+    done
+  else
+    select_packages "$os"
+  fi
 
   if [[ "$os" == "macos" ]]; then
     install_macos
