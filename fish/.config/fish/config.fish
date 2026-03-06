@@ -8,6 +8,11 @@ end
 # --- General -------------------------------------------------
 set fish_greeting
 
+# TrueColor support for all platforms (WSL, Mac, Arch)
+if test "$TERM" = "xterm-color"
+    set -gx TERM xterm-256color
+end
+
 alias c    clear
 alias l    'eza --long --header --all --color=auto'
 alias ls   'eza --long --header --all --color=auto'

@@ -1,0 +1,27 @@
+name: onedark-pro-vivid
+description: Based on the OneDark Pro color palette.
+
+primary: "#61afef"
+secondary: "#56b6c2"
+accent: "#c678dd"
+
+background: "#282c34"
+surface: "#282c34"
+
+error: "#e06c75"
+success: "#98c379"
+warning: "#e5c07b"
+
+syntax:
+  json_key: "#e06c75"
+  json_string: "#98c379"
+  json_number: "#d19a66"
+  json_boolean: "#61afef"
+  json_null: "#c678dd"
+
+method:
+  get: "#98c379"
+  post: "#61afef"
+  put: "#e5c07b"
+  delete: "#e06c75"
+  patch: "#c678dd"
