@@ -38,6 +38,7 @@ alias spot 'spotui'
 alias news 'eilmeldung'
 
 # --- TMux Shortcuts -----------------------------------------
+alias t  'tmux attach'
 alias tn 'env TMUX= tmux new-session'
 alias ta 'tmux attach-session -t'
 alias tls 'tmux list-sessions'

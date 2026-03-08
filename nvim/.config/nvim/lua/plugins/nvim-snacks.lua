@@ -49,7 +49,7 @@ return {
 					},
 					{
 						text = {
-							{ "    \\_\\ \\/ \\___|\\___ / \\_/ |_|_| |_| |_|", hl = "SnacksDashboardHeader3" },
+							{ "    \\_\\ \\/ \\___|\\___ /\\_/ |_|_| |_| |_|", hl = "SnacksDashboardHeader3" },
 						},
 						align = "center",
 					},

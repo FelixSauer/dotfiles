@@ -148,14 +148,24 @@ Kitty is configured with `macos_option_as_alt left`:
 | `Prefix + z`       | Zoom pane                  |
 | `Prefix + x`       | Kill pane                  |
 
+**Pane resizing**
+
+| Binding                    | Action                        |
+|----------------------------|-------------------------------|
+| `Ctrl+Shift+Left/Right`    | Resize pane left/right (1 col, no prefix) |
+| `Ctrl+Shift+Up/Down`       | Resize pane up/down (1 row, no prefix)    |
+| `Prefix + H/J/K/L`        | Resize pane (5 cols/rows, repeatable)     |
+| `Prefix + Ctrl+o`          | Rotate panes in layout                    |
+
 **Windows**
 
 | Binding        | Action                  |
 |----------------|-------------------------|
 | `Shift + Tab`  | Next window (no prefix) |
-| `Prefix + t`   | New window              |
+| `Prefix + t`   | New session             |
 | `Prefix + ,`   | Rename window           |
 | `Prefix + 1-9` | Switch to window        |
+| `Alt + 1-9`    | Switch to window        |
 | `Prefix + n/p` | Next / previous window  |
 | `Prefix + &`   | Kill window             |
 
