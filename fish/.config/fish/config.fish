@@ -58,6 +58,7 @@ zoxide init fish | source
 direnv hook fish | source
 
 fzf --fish | source
+bind --erase \e\t
 
 # --- FZF Configuration ---------------------------------------
 set -gx FZF_DEFAULT_OPTS "--preview 'bat --color=always --style=numbers --line-range=:500 {}' --bind 'enter:become(nvim {})'"

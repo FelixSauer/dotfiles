@@ -162,7 +162,7 @@ Kitty is configured with `macos_option_as_alt left`:
 | Binding        | Action                  |
 |----------------|-------------------------|
 | `Shift + Tab`  | Next window (no prefix) |
-| `Prefix + t`   | New session             |
+| `Prefix + t`   | New window              |
 | `Prefix + ,`   | Rename window           |
 | `Prefix + 1-9` | Switch to window        |
 | `Alt + 1-9`    | Switch to window        |
